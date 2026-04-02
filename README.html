@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E3%83%8D%E3%83%91%E3%83%BC%E3%83%AB%E3%83%BB%E3%82%B8%E3%83%A3%E3%82%AC%E3%82%A4%E3%83%A2%E8%BE%B2%E5%AE%B6%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%B2%E3%83%BC%E3%83%A0">ネパール・ジャガイモ農家シミュレーションゲーム</h1>
+<p>ネパールの農村を舞台に、ジャガイモ栽培の一シーズンを体験するブラウザ型教育ゲーム。<br>
+栽培の各局面で判断を下し、5つのスコアを育てて最高ランクを目指す。</p>
+<h2 id="%E9%81%8A%E3%81%B3%E6%96%B9">遊び方</h2>
+<p><code>index.html</code> をブラウザで開くだけ。ビルド・サーバー不要。</p>
+<hr>
+<h2 id="%E3%82%B2%E3%83%BC%E3%83%A0%E3%81%AE%E9%80%B2%E8%A1%8C">ゲームの進行</h2>
+<h3 id="1-%E3%82%B2%E3%83%BC%E3%83%A0%E9%96%8B%E5%A7%8B%E8%A8%AD%E5%AE%9A">1. ゲーム開始設定</h3>
+<table>
+<thead>
+<tr>
+<th>設定項目</th>
+<th>選択肢</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作付け季節</td>
+<td>夏作（モンスーン期）／冬作（乾季）</td>
+</tr>
+<tr>
+<td>栽培地域</td>
+<td>テライ平野 ／ 丘陵地帯 ／ 山岳地帯</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-%E5%85%A8%E4%BD%93%E3%83%95%E3%83%AD%E3%83%BC">2. 全体フロー</h3>
+<pre class="hljs"><code><div>ゲーム開始
+  → フェーズ1〜10（農作業の各局面）
+      └ 各フェーズの合間にトラップイベント（季節依存）が発生することがある
+  → 販売フェーズ（スコアに応じて選択肢が変わる）
+  → 最終結果
+      ├ 収穫スコア ≤ 5 → ゲームオーバー（農場崩壊）
+      └ それ以外     → ランク判定
+</div></code></pre>
+<hr>
+<h2 id="%E8%A9%95%E4%BE%A1%E3%82%B9%E3%82%B3%E3%82%A25%E9%A0%85%E7%9B%AE">評価スコア（5項目）</h2>
+<p>すべて <strong>0〜100</strong> の範囲。初期値はすべて <strong>50</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>スコア名</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>収穫量（harvest）</td>
+<td>実際に収穫できたジャガイモの量</td>
+</tr>
+<tr>
+<td>品質（quality）</td>
+<td>イモの商品価値・残留農薬・外観</td>
+</tr>
+<tr>
+<td>健康（health）</td>
+<td>農家・消費者の安全への配慮</td>
+</tr>
+<tr>
+<td>環境（env）</td>
+<td>土壌・水・生態系への影響</td>
+</tr>
+<tr>
+<td>地域（community）</td>
+<td>近隣農家や市場との関係</td>
+</tr>
+</tbody>
+</table>
+<p>各フェーズの選択肢は、これらのスコアに <strong>加算・減算</strong> を与える（例：<code>harvest: +10, quality: -5</code>）。</p>
+<hr>
+<h2 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA%E4%B8%80%E8%A6%A7%E3%81%A8%E7%82%B9%E6%95%B0%E5%A4%89%E5%8C%96">フェーズ一覧と点数変化</h2>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA1%E5%93%81%E7%A8%AE%E3%83%BB%E7%A8%AE%E8%8A%8B%E9%81%B8%E6%8A%9E-%F0%9F%8C%B1">フェーズ1｜品種・種芋選択 🌱</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NARC認定種芋（クフリ・ジョティ）を購入</td>
+<td>収穫+10、品質+10</td>
+</tr>
+<tr>
+<td>昨年の自家採種を使う</td>
+<td>収穫−5、品質−5</td>
+</tr>
+<tr>
+<td>市場の安い種芋を購入</td>
+<td>収穫−10、品質−15、健康−5</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA2%E8%8A%8B%E5%88%87%E3%83%BB%E5%82%AC%E8%8A%BD%E5%87%A6%E7%90%86-%F0%9F%94%AA">フェーズ2｜芋切・催芽処理 🔪</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1片40〜60gに切り、草木灰で切り口処理</td>
+<td>収穫+8、品質+5</td>
+</tr>
+<tr>
+<td>大きいまま植える（切らない）</td>
+<td>収穫+3、品質+3</td>
+</tr>
+<tr>
+<td>大きく切りすぎて処理なしで植える</td>
+<td>収穫−12、品質−8</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA3%E5%9C%9F%E5%A3%8C%E3%83%BB%E7%95%91%E3%81%AE%E6%BA%96%E5%82%99-%F0%9F%8C%8D">フェーズ3｜土壌・畑の準備 🌍</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>土壌検査を実施してから作業</td>
+<td>収穫+8、品質+10、環境+5</td>
+</tr>
+<tr>
+<td>昨年と同じ場所に連作</td>
+<td>収穫−15、品質−10、環境−5</td>
+</tr>
+<tr>
+<td>深耕して別の畑で栽培（輪作）</td>
+<td>収穫+10、品質+8、環境+8</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA4%E6%96%BD%E8%82%A5%E8%A8%AD%E8%A8%88-%F0%9F%8C%BF">フェーズ4｜施肥設計 🌿</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>牛糞堆肥＋適量の化学肥料（N:P:K＝100:60:80 kg/ha）</td>
+<td>収穫+12、品質+10、環境+5、健康+5</td>
+</tr>
+<tr>
+<td>化学肥料を大量投入</td>
+<td>収穫−8、品質−12、環境−15、健康−10</td>
+</tr>
+<tr>
+<td>牛糞堆肥のみ（化学肥料なし）</td>
+<td>収穫−5、品質+5、環境+10、健康+8</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA5%E7%95%9D%E7%AB%8B%E3%81%A6%E3%83%BB%E6%A4%8D%E4%BB%98-%F0%9F%8C%BE">フェーズ5｜畝立て・植付 🌾</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>高畝（30cm以上）＋適正株間（30×60cm）</td>
+<td>収穫+10、品質+10</td>
+</tr>
+<tr>
+<td>平畝で密植（株間を狭める）</td>
+<td>収穫−10、品質−10、環境−5</td>
+</tr>
+<tr>
+<td>等高線植付（山岳・丘陵地帯向け）</td>
+<td>収穫+8、品質+8、環境+15</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA6%E5%9F%B9%E5%9C%9F%E5%9C%9F%E5%AF%84%E3%81%9B-%E2%9B%B0%EF%B8%8F">フェーズ6｜培土（土寄せ） ⛰️</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>株高20cmの時点で高めに培土</td>
+<td>収穫+8、品質+12</td>
+</tr>
+<tr>
+<td>培土のタイミングを遅らせる</td>
+<td>収穫−5、品質−20、健康−15</td>
+</tr>
+<tr>
+<td>2回培土（第1回＋追加）でしっかり高畝に</td>
+<td>収穫+10、品質+15</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA7%E7%81%8C%E6%BC%91%E7%AE%A1%E7%90%86-%F0%9F%92%A7">フェーズ7｜灌漑管理 💧</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>土の乾燥具合を見て畝間灌漑（適量）</td>
+<td>収穫+10、品質+8</td>
+</tr>
+<tr>
+<td>雨頼みで灌漑なし</td>
+<td>収穫−12、品質−8</td>
+</tr>
+<tr>
+<td>たっぷり灌漑（過剰）</td>
+<td>収穫−10、品質−12、環境−5</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA8%E7%97%85%E5%AE%B3%E8%99%AB%E5%AF%BE%E5%BF%9C-%F0%9F%A6%A0">フェーズ8｜病害虫対応 🦠</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>症状確認後、適切な薬剤を散布（安全装備着用）</td>
+<td>収穫+8、品質+8、健康+5</td>
+</tr>
+<tr>
+<td>農薬を大量散布（過剰使用）</td>
+<td>収穫+3、品質−5、健康−20、環境−15、地域−10</td>
+</tr>
+<tr>
+<td>様子見（何もしない）</td>
+<td>収穫−20、品質−15、地域−15</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA9%E5%8F%8E%E7%A9%AB%E5%88%A4%E6%96%AD-%F0%9F%A5%94">フェーズ9｜収穫判断 🥔</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>茎葉が枯れてから晴天日に収穫</td>
+<td>収穫+12、品質+12</td>
+</tr>
+<tr>
+<td>市場価格が高いうちに早めに収穫</td>
+<td>収穫−5、品質−10、地域+5</td>
+</tr>
+<tr>
+<td>雨の日でも急いで収穫</td>
+<td>品質−18、環境−5</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA10%E8%B2%AF%E8%94%B5%E3%83%BB%E5%87%BA%E8%8D%B7-%F0%9F%8F%A0">フェーズ10｜貯蔵・出荷 🏠</h3>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>キュアリング処理後、適切な温度・湿度で貯蔵</td>
+<td>収穫+5、品質+15、地域+10</td>
+</tr>
+<tr>
+<td>収穫後すぐに全量出荷</td>
+<td>品質+5、地域−5</td>
+</tr>
+<tr>
+<td>光が当たる場所で野積み貯蔵</td>
+<td>収穫−20、品質−20、健康−10</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%E3%83%88%E3%83%A9%E3%83%83%E3%83%97%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E7%AA%81%E7%99%BA%E7%9A%84%E3%81%AA%E7%81%BD%E5%AE%B3">トラップイベント（突発的な災害）</h2>
+<p>フェーズの合間にランダムで発生。同じイベントは1回のみ。季節によって内容が異なる。</p>
+<h3 id="%E5%A4%8F%E4%BD%9C%E3%81%AE%E3%81%BF">夏作のみ</h3>
+<p><strong>突然の豪雨！モンスーン到来</strong> 🌧️（フェーズ7付近）</p>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>事前に排水溝を掘っておいた（準備済み）</td>
+<td>収穫+5、環境+5</td>
+</tr>
+<tr>
+<td>急いで排水溝を掘る</td>
+<td>収穫−10、品質−8</td>
+</tr>
+<tr>
+<td>何もできない（排水設備なし）</td>
+<td>収穫−25、品質−20、環境−10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>突然の雹（ひょう）！</strong> 🌨️（フェーズ6付近）</p>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>わら被覆をしていた（事前準備済み）</td>
+<td>品質+5</td>
+</tr>
+<tr>
+<td>被害確認して追肥で回復を促す</td>
+<td>収穫−8、品質−5</td>
+</tr>
+<tr>
+<td>何もしない（様子見）</td>
+<td>収穫−20、品質−15</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E5%86%AC%E4%BD%9C%E3%81%AE%E3%81%BF">冬作のみ</h3>
+<p><strong>予想外の長期乾燥！</strong> ☀️（フェーズ5付近）</p>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>川から引水して緊急灌漑</td>
+<td>収穫+5、品質+5</td>
+</tr>
+<tr>
+<td>わらマルチで水分蒸発を抑える</td>
+<td>収穫−5、品質−3</td>
+</tr>
+<tr>
+<td>何もしない（雨が降るまで待つ）</td>
+<td>収穫−20、品質−15</td>
+</tr>
+</tbody>
+</table>
+<p><strong>サルの被害！（テライ地帯）</strong> 🐒（フェーズ8付近）</p>
+<table>
+<thead>
+<tr>
+<th>選択肢</th>
+<th>主な点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>事前に設置した柵が機能した</td>
+<td>収穫+5、地域+10</td>
+</tr>
+<tr>
+<td>大声で追い払う</td>
+<td>収穫−5、品質−5</td>
+</tr>
+<tr>
+<td>何もできない</td>
+<td>収穫−18、品質−10</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%E8%B2%A9%E5%A3%B2%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BA11%F0%9F%92%B0">販売フェーズ（フェーズ11）💰</h2>
+<p>スコアに応じて選択できる販売先が変わる。</p>
+<table>
+<thead>
+<tr>
+<th>販売先</th>
+<th>解放条件</th>
+<th>良好時の点数変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>市場（ハット）販売 🏪</td>
+<td>常に選択可</td>
+<td>地域+5</td>
+</tr>
+<tr>
+<td>仲買人への販売 🤝</td>
+<td>常に選択可</td>
+<td>収穫+8、地域+5（収穫≥60の場合）</td>
+</tr>
+<tr>
+<td>個人・直売販売 🛒</td>
+<td><strong>品質 ≥ 60</strong></td>
+<td>収穫+15、品質+5、地域+15</td>
+</tr>
+<tr>
+<td>農協・契約栽培出荷 🤲</td>
+<td><strong>収穫 ≥ 55 かつ 品質 ≥ 55</strong></td>
+<td>収穫+10、品質+8、地域+20、環境+5</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%E6%9C%80%E7%B5%82%E3%83%A9%E3%83%B3%E3%82%AF">最終ランク</h2>
+<p>5つのスコアの <strong>平均値</strong> で判定。</p>
+<table>
+<thead>
+<tr>
+<th>平均スコア</th>
+<th>ランク</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>85以上</td>
+<td>マスターファーマー</td>
+</tr>
+<tr>
+<td>70〜84</td>
+<td>ベテラン農家</td>
+</tr>
+<tr>
+<td>55〜69</td>
+<td>一人前の農家</td>
+</tr>
+<tr>
+<td>40〜54</td>
+<td>見習い農家</td>
+</tr>
+<tr>
+<td>39以下</td>
+<td>新米農家</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>収穫スコアが <strong>5以下</strong> になるとゲームオーバー（農場崩壊）。</p>
+</blockquote>
+<hr>
+<h2 id="%E7%9F%A5%E8%AD%98%E3%82%AB%E3%83%BC%E3%83%89%E3%82%A2%E3%83%AB%E3%83%90%E3%83%A0">知識カード（アルバム）</h2>
+<p>各フェーズの選択肢によって農業知識カードを入手できる。<br>
+ゲーム終了後のアルバムで確認でき、ネパール農業の実践知識を学べる内容（日本語表記）。</p>
+<table>
+<thead>
+<tr>
+<th>カードID</th>
+<th>テーマ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>variety_jyoti</td>
+<td>クフリ・ジョティとは</td>
+</tr>
+<tr>
+<td>late_blight</td>
+<td>疫病（レイトブライト）</td>
+</tr>
+<tr>
+<td>seed_virus</td>
+<td>自家採種のウイルスリスク</td>
+</tr>
+<tr>
+<td>monsoon_drain</td>
+<td>モンスーン対策の排水</td>
+</tr>
+<tr>
+<td>fertilizer_balance</td>
+<td>施肥バランスの重要性</td>
+</tr>
+<tr>
+<td>hilling</td>
+<td>培土（土寄せ）のタイミング</td>
+</tr>
+<tr>
+<td>scab_ph</td>
+<td>そうか病と土壌pH</td>
+</tr>
+<tr>
+<td>storage_curing</td>
+<td>貯蔵・キュアリング</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>輪作の重要性</td>
+</tr>
+<tr>
+<td>pesticide_safety</td>
+<td>農薬の安全な使い方</td>
+</tr>
+<tr>
+<td>market_timing</td>
+<td>出荷タイミングの戦略</td>
+</tr>
+<tr>
+<td>broker_risk</td>
+<td>仲買人との交渉リスク</td>
+</tr>
+<tr>
+<td>direct_sales</td>
+<td>直売のメリット</td>
+</tr>
+<tr>
+<td>cooperative</td>
+<td>農協活用のすすめ</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
