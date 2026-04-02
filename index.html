@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>じゃがいもマスター〜ネパール農家への道〜</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Fredoka+One&display=swap');
+
+  :root {
+    --earth: #5c3d1e;
+    --soil: #8B5E3C;
+    --grass: #4a7c3f;
+    --sky: #7eb8d4;
+    --sun: #f5a623;
+    --potato: #c8a85a;
+    --danger: #c0392b;
+    --safe: #27ae60;
+    --card-bg: #fdf6e3;
+    --shadow: rgba(0,0,0,0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(180deg, #a8d5e8 0%, #c5e8b0 40%, #8B5E3C 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  #app {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    background: #fdf6e3;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0,0,0,0.3);
+  }
+
+  /* ===== HEADER ===== */
+  #header {
+    background: linear-gradient(135deg, #4a7c3f, #2d5a27);
+    color: white;
+    padding: 12px 16px 8px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  #header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  }
+
+  #header .subtitle {
+    font-size: 0.65rem;
+    opacity: 0.85;
+    margin-top: 1px;
+  }
+
+  .score-bar {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .score-item {
+    background: rgba(255,255,255,0.18);
+    border-radius: 12px;
+    padding: 8px 4px 7px;
+    font-size: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    backdrop-filter: blur(4px);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .score-item .val {
+    font-weight: 900;
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .score-item.positive .val { color: #a8ff78; }
+  .score-item.negative .val { color: #ff8080; }
+
+  /* ===== MAIN CONTENT ===== */
+  #main {
+    padding: 16px;
+    min-height: calc(100vh - 120px);
+  }
+
+  /* ===== PHASE INDICATOR ===== */
+  .phase-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .phase-badge {
+    background: var(--earth);
+    color: white;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .phase-name {
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  .phase-dots {
+    display: flex;
+    gap: 3px;
+    margin-left: auto;
+  }
+
+  .phase-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ddd;
+  }
+  .phase-dot.done { background: var(--grass); }
+  .phase-dot.current { background: var(--sun); }
+
+  /* ===== SCENE CARD ===== */
+  .scene-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px var(--shadow);
+    border-left: 5px solid var(--grass);
+    animation: slideIn 0.4s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scene-emoji {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .scene-title {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--earth);
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .scene-desc {
+    font-size: 0.82rem;
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .season-badge {
+    display: inline-block;
+    background: var(--sun);
+    color: white;
+    border-radius: 8px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  /* ===== TRAP EVENT ===== */
+  .trap-card {
+    background: linear-gradient(135deg, #fff3f3, #ffe0e0);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 2px solid var(--danger);
+    animation: shake 0.5s ease, slideIn 0.4s ease;
+    box-shadow: 0 4px 20px rgba(192,57,43,0.2);
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .trap-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .trap-icon { font-size: 1.8rem; }
+
+  .trap-label {
+    background: var(--danger);
+    color: white;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .trap-title {
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--danger);
+    margin-bottom: 6px;
+  }
+
+  .trap-desc {
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* ===== CHOICES ===== */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .choice-btn {
+    background: white;
+    border: 2px solid #e0d5c0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .choice-btn:active {
+    transform: scale(0.97);
+  }
+
+  .choice-btn:hover {
+    border-color: var(--grass);
+    background: #f0fff0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74,124,63,0.2);
+  }
+
+  .choice-btn .choice-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--grass);
+    margin-bottom: 3px;
+  }
+
+  .choice-btn .choice-text {
+    font-size: 0.85rem;
+    color: #333;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .choice-btn .choice-hint {
+    font-size: 0.68rem;
+    color: #888;
+    margin-top: 3px;
+  }
+
+  /* ===== RESULT ===== */
+  .result-card {
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    animation: slideIn 0.4s ease;
+  }
+
+  .result-good {
+    background: linear-gradient(135deg, #e8f8e8, #d0f0d0);
+    border: 2px solid var(--safe);
+  }
+
+  .result-bad {
+    background: linear-gradient(135deg, #fff3f3, #ffe0e0);
+    border: 2px solid var(--danger);
+  }
+
+  .result-neutral {
+    background: linear-gradient(135deg, #f8f4e8, #f0e8d0);
+    border: 2px solid var(--soil);
+  }
+
+  .result-title {
+    font-size: 1rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+
+  .result-desc {
+    font-size: 0.8rem;
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .score-changes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .score-change {
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .score-change.up { background: #d4edda; color: #155724; }
+  .score-change.down { background: #f8d7da; color: #721c24; }
+
+  /* ===== KNOWLEDGE CARD ===== */
+  .knowledge-card {
+    background: linear-gradient(135deg, #fff9e6, #ffeeba);
+    border: 2px solid var(--potato);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 14px;
+    animation: cardPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+  }
+
+  @keyframes cardPop {
+    0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .knowledge-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .card-new-badge {
+    background: var(--sun);
+    color: white;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    animation: pulse 1s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .knowledge-title {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--earth);
+    margin-bottom: 6px;
+  }
+
+  .knowledge-text {
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .card-icon { font-size: 2rem; }
+
+  /* ===== NEXT BTN ===== */
+  .next-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4a7c3f, #2d5a27);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 900;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(74,124,63,0.4);
+    margin-bottom: 16px;
+  }
+
+  .next-btn:active { transform: scale(0.97); }
+  .next-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(74,124,63,0.5); }
+
+  /* ===== SETUP SCREEN ===== */
+  .setup-screen {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .setup-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--earth);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .setup-subtitle {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 20px;
+  }
+
+  .setup-potato {
+    font-size: 5rem;
+    margin: 16px 0;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .setup-section {
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 10px var(--shadow);
+    text-align: left;
+  }
+
+  .setup-section h3 {
+    font-size: 0.85rem;
+    color: var(--earth);
+    font-weight: 900;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .option-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .option-btn {
+    border: 2px solid #e0d5c0;
+    border-radius: 10px;
+    padding: 10px 8px;
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  .option-btn.selected {
+    border-color: var(--grass);
+    background: #f0fff0;
+    box-shadow: 0 0 0 2px var(--grass);
+  }
+
+  .option-btn .opt-emoji { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+  .option-btn .opt-name { font-size: 0.75rem; font-weight: 700; color: #333; }
+  .option-btn .opt-desc { font-size: 0.6rem; color: #888; margin-top: 2px; }
+
+  .start-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #f5a623, #e67e22);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 900;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(245,166,35,0.5);
+    margin-top: 8px;
+  }
+
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,166,35,0.6); }
+  .start-btn:active { transform: scale(0.97); }
+
+  /* ===== GAMEOVER ===== */
+  .gameover-screen {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .gameover-emoji { font-size: 5rem; margin: 20px 0; }
+
+  .gameover-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    color: var(--danger);
+    margin-bottom: 8px;
+  }
+
+  .gameover-desc {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  /* ===== FINAL RESULT ===== */
+  .final-screen {
+    text-align: center;
+    padding: 16px;
+  }
+
+  .final-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    color: var(--earth);
+    margin-bottom: 4px;
+  }
+
+  .rank-display {
+    font-size: 3.5rem;
+    margin: 16px 0 8px;
+  }
+
+  .rank-name {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--sun);
+    margin-bottom: 4px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+
+  .final-scores {
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    margin: 14px 0;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+
+  .final-score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0e8d0;
+    font-size: 0.85rem;
+  }
+
+  .final-score-row:last-child { border-bottom: none; }
+
+  .score-bar-visual {
+    height: 8px;
+    border-radius: 4px;
+    background: #f0e8d0;
+    flex: 1;
+    margin: 0 10px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--grass), var(--sun));
+    transition: width 1s ease;
+  }
+
+  .cards-collected {
+    background: linear-gradient(135deg, #fff9e6, #ffeeba);
+    border: 2px solid var(--potato);
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+
+  .cards-collected h3 {
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: var(--earth);
+    margin-bottom: 8px;
+  }
+
+  .card-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .card-chip {
+    background: white;
+    border: 1px solid var(--potato);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.65rem;
+    color: var(--earth);
+  }
+
+  .retry-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4a7c3f, #2d5a27);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 900;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(74,124,63,0.4);
+  }
+
+  /* ===== CARDS ALBUM BTN ===== */
+  .album-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--sun), #e67e22);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 16px rgba(245,166,35,0.5);
+    cursor: pointer;
+    z-index: 200;
+    border: none;
+    transition: transform 0.2s;
+  }
+
+  .album-fab:hover { transform: scale(1.1); }
+  .album-fab .badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--danger);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ===== ALBUM OVERLAY ===== */
+  .album-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 300;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    animation: fadeIn 0.3s;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .album-panel {
+    background: #fdf6e3;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 75vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .album-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    color: var(--earth);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .album-card {
+    background: linear-gradient(135deg, #fff9e6, #ffeeba);
+    border: 2px solid var(--potato);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .album-card .card-icon { font-size: 2rem; flex-shrink: 0; }
+  .album-card .card-body { flex: 1; }
+  .album-card .card-title { font-size: 0.85rem; font-weight: 900; color: var(--earth); margin-bottom: 4px; }
+  .album-card .card-text { font-size: 0.72rem; color: #555; line-height: 1.6; }
+
+  .album-empty {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.85rem;
+    padding: 20px;
+  }
+
+  .close-btn {
+    width: 100%;
+    background: var(--earth);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  /* ===== DEAD SCREEN ===== */
+  .dead-plant {
+    font-size: 5rem;
+    text-align: center;
+    margin: 20px 0;
+    animation: wilt 1s ease forwards;
+  }
+
+  @keyframes wilt {
+    from { transform: rotate(0deg); filter: none; }
+    to { transform: rotate(-15deg); filter: grayscale(1); }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <h1>🥔 じゃがいもマスター</h1>
+    <div class="subtitle">〜ネパール農家への道〜</div>
+    <div class="score-bar" id="score-bar"></div>
+  </div>
+  <div id="main"></div>
+  <button class="album-fab" id="album-btn" style="display:none" onclick="showAlbum()">
+    🃏<span class="badge" id="card-badge">0</span>
+  </button>
+</div>
+
+<script>
+// ===== STATE =====
+const state = {
+  screen: 'setup',
+  season: null,      // 'summer' or 'winter'
+  region: null,      // 'terai', 'hill', 'mountain'
+  phase: 0,
+  scores: { harvest: 50, quality: 50, health: 50, env: 50, community: 50 },
+  cards: [],
+  pendingCard: null,
+  gameOver: false,
+  history: []
+};
+
+// ===== KNOWLEDGE CARDS =====
+const KNOWLEDGE_CARDS = {
+  variety_jyoti: {
+    icon: '🌱',
+    title: 'クフリ・ジョティとは',
+    text: 'ネパール最普及品種。収量安定だが疫病に弱い。モンスーン前の早めの防除が鍵。山岳地帯の夏作にも適応。'
+  },
+  late_blight: {
+    icon: '🍃',
+    title: '疫病（レイトブライト）',
+    text: '低温多湿で爆発的に発生。葉の水浸状斑点が最初のサイン。マンコゼブ散布は発症前の予防散布が効果的。発症後は手遅れになりやすい。'
+  },
+  seed_virus: {
+    icon: '🦠',
+    title: '自家採種のウイルスリスク',
+    text: '毎年同じ種芋を使うと、ウイルスが蓄積して収量が落ちる。3〜4年ごとに認定種芋（NARC）を使うことで収量が最大30%改善する。'
+  },
+  monsoon_drain: {
+    icon: '🌧️',
+    title: 'モンスーン対策の排水',
+    text: 'テライ平野では6〜9月に豪雨が集中。畝を高くし、排水溝を事前に掘ることが被害ゼロへの鍵。段々畑では土壌侵食も要注意。'
+  },
+  fertilizer_balance: {
+    icon: '⚖️',
+    title: '施肥バランスの重要性',
+    text: '窒素過多は茎葉ばかり茂り、イモが小さくなる（過繁茂）。カリが不足するとイモの品質が低下。牛糞堆肥+少量の化学肥料が理想的。'
+  },
+  hilling: {
+    icon: '⛰️',
+    title: '培土（土寄せ）のタイミング',
+    text: '株高20〜25cmで第1回培土。遅れると緑化イモが発生し、ソラニンが生成されて食べられなくなる。培土は1〜2回が基本。'
+  },
+  scab_ph: {
+    icon: '🧪',
+    title: 'そうか病と土壌pH',
+    text: 'そうか病はアルカリ土壌（pH7以上）で多発。テライ石灰質土壌では特に注意。硫黄資材でpH5.2〜5.5に調整すると発生を抑えられる。'
+  },
+  storage_curing: {
+    icon: '🏠',
+    title: 'キュアリング処理',
+    text: '収穫後すぐに出荷せず、15〜20℃・高湿度で1〜2週間置くことで傷が癒え、貯蔵中の腐敗が大幅に減少する。山岳地帯の土中貯蔵でも有効。'
+  },
+  market_timing: {
+    icon: '📈',
+    title: '市場価格と出荷タイミング',
+    text: '収穫直後は価格が低い。1〜2ヶ月貯蔵して端境期に出荷すると2〜3倍の価格になることも。ただし貯蔵中の腐敗リスク管理が必要。'
+  },
+  frost_risk: {
+    icon: '❄️',
+    title: '霜害と植付タイミング',
+    text: '山岳地帯（2000m以上）では4月でも遅霜が発生する。出芽後の霜は致命的。わら被覆や植付時期を2週間遅らせるだけで被害を防げる。'
+  },
+  pesticide_safety: {
+    icon: '⚠️',
+    title: '農薬散布の安全管理',
+    text: 'マスクなし・素手での農薬散布は農薬中毒の原因。ネパールでは年間数千件の農薬中毒が報告。マスク・手袋・長袖着用が必須。収穫前日数の遵守も重要。'
+  },
+  rotation: {
+    icon: '🔄',
+    title: '輪作の重要性',
+    text: 'ジャガイモの連作は土壌病害（そうか病・黒あし病）を増加させる。トウモロコシや豆類と3〜4年ローテーションすることで土壌が回復する。'
+  },
+  broker_risk: {
+    icon: '🤝',
+    title: '仲買人との付き合い方',
+    text: '仲買人は手軽に売れるが、価格交渉力が低くなりがち。品質の良し悪しで価格差がつきにくい。複数の仲買人と関係を持つことで価格競争を生み出せる。'
+  },
+  direct_sales: {
+    icon: '🛒',
+    title: '直売・個人販売のメリット',
+    text: '市場や仲買人より20〜50%高く売れる可能性がある。ただし輸送・販売の手間と時間が必要。品質と信頼関係の構築が成功の鍵。常連客を持つことが収入安定につながる。'
+  },
+  cooperative: {
+    icon: '🤲',
+    title: '農協・契約栽培の強み',
+    text: '契約栽培は価格と販売量が事前に決まり経営が安定する。農協を通じると農薬・肥料を安く共同購入でき、技術指導も受けられる。ネパールでは農協加入農家の収入が平均15%高い。'
+  }
+};
+
+// ===== GAME DATA =====
+const PHASES = [
+  {
+    id: 'variety',
+    name: '品種・種芋選択',
+    emoji: '🌱',
+    desc: '今シーズンの品種と種芋の調達先を選びましょう。',
+    choices: [
+      {
+        text: 'NARCの認定種芋（クフリ・ジョティ）を購入',
+        hint: '少し高いが品質は確実',
+        result: { type: 'good', title: '良質な種芋を確保！', desc: '認定種芋はウイルスフリーで発芽率が高い。コストは上がるが収量への期待大。', scores: { harvest: +10, quality: +10 }, card: 'variety_jyoti' }
+      },
+      {
+        text: '昨年の自家採種を使う',
+        hint: 'コスト節約になるが…',
+        result: { type: 'neutral', title: 'コスト節約になったが…', desc: '自家採種はコスト節約になるが、ウイルスの蓄積が心配。今年は大丈夫かも。', scores: { harvest: -5, quality: -5 }, card: 'seed_virus' }
+      },
+      {
+        text: '市場の安い種芋を購入',
+        hint: '最安値だが品質は？',
+        result: { type: 'bad', title: '品質が心配…', desc: '安いのには理由がある。品種が混ざっており、病気の種芋も混入している可能性が。', scores: { harvest: -10, quality: -15, health: -5 }, card: null }
+      }
+    ]
+  },
+  {
+    id: 'seed_prep',
+    name: '芋切・催芽処理',
+    emoji: '🔪',
+    desc: '種芋を適切なサイズに切り、芽出しをします。',
+    choices: [
+      {
+        text: '1片40〜60gに切り、草木灰で切り口処理',
+        hint: '伝統的な方法',
+        result: { type: 'good', title: '完璧な種芋の準備！', desc: '適正サイズ+草木灰処理で切り口の病原菌をブロック。発芽が揃い生育初期が安定。', scores: { harvest: +8, quality: +5 }, card: null }
+      },
+      {
+        text: '大きいまま植える（切らない）',
+        hint: '手間が省けるが種芋のコストが高い',
+        result: { type: 'neutral', title: '発芽は揃ったが…', desc: '切らない場合は腐敗リスクは低いが、種芋の使用量が増えコストが上がる。', scores: { harvest: +3, quality: +3 }, card: null }
+      },
+      {
+        text: '大きく切りすぎて処理なしで植える',
+        hint: '急いで作業した',
+        result: { type: 'bad', title: '切り口から腐敗が！', desc: '大きすぎる切り片は腐敗しやすく、処理なしでは土中の菌が侵入。欠株が増加。', scores: { harvest: -12, quality: -8 }, card: null }
+      }
+    ]
+  },
+  {
+    id: 'soil_prep',
+    name: '土壌・畑の準備',
+    emoji: '🌍',
+    desc: '作付け前の土壌チェックと耕起を行います。',
+    choices: [
+      {
+        text: '土壌検査を実施してから作業',
+        hint: '手間と費用がかかるが効果的',
+        result: { type: 'good', title: '土壌の状態を把握！', desc: 'pH・栄養状態を把握して施肥設計ができる。連作障害も事前に確認できた。', scores: { harvest: +8, quality: +10, env: +5 }, card: 'scab_ph' }
+      },
+      {
+        text: '昨年と同じ場所に連作',
+        hint: '楽だが危険かも…',
+        result: { type: 'bad', title: '連作障害の危機！', desc: '同じ畑での連作は土壌病害のリスクが高い。そうか病・黒あし病の発生率が上昇。', scores: { harvest: -15, quality: -10, env: -5 }, card: 'rotation' }
+      },
+      {
+        text: '深耕して別の畑で栽培',
+        hint: '輪作の基本',
+        result: { type: 'good', title: '健全な輪作！', desc: '前作トウモロコシの後作ジャガイモ。土壌病害のリスクが低く、生育初期から順調。', scores: { harvest: +10, quality: +8, env: +8 }, card: 'rotation' }
+      }
+    ]
+  },
+  {
+    id: 'fertilizer',
+    name: '施肥設計',
+    emoji: '🌿',
+    desc: '肥料の種類と量を選択します。',
+    choices: [
+      {
+        text: '牛糞堆肥+適量の化学肥料（N:P:K＝100:60:80kg/ha）',
+        hint: 'バランス重視',
+        result: { type: 'good', title: '理想的な施肥！', desc: '有機と化学の組み合わせで土壌改善と収量確保を両立。品質にも好影響。', scores: { harvest: +12, quality: +10, env: +5, health: +5 }, card: 'fertilizer_balance' }
+      },
+      {
+        text: '化学肥料を大量に投入（多ければ多いほど良い）',
+        hint: '収量を最大化したい',
+        result: { type: 'bad', title: '施肥過多！', desc: '窒素過多で茎葉が茂りすぎ、イモが小さくなった。土壌も酸性化し環境にも悪影響。', scores: { harvest: -8, quality: -12, env: -15, health: -10 }, card: 'fertilizer_balance' }
+      },
+      {
+        text: '牛糞堆肥のみ（化学肥料なし）',
+        hint: '環境には優しいが',
+        result: { type: 'neutral', title: '環境には優しいが収量は控えめ', desc: '有機のみでは養分が不足気味。収量は平均より20%低いが品質と環境スコアは良好。', scores: { harvest: -5, quality: +5, env: +10, health: +8 }, card: null }
+      }
+    ]
+  },
+  {
+    id: 'ridging',
+    name: '畝立て・植付',
+    emoji: '🌾',
+    desc: '畝を立てて種芋を植え付けます。',
+    choices: [
+      {
+        text: '高畝（30cm以上）＋適正株間（30×60cm）で植付',
+        hint: '基本に忠実',
+        result: { type: 'good', title: '完璧な畝立て！', desc: '高畝は排水が良く、根の発達も良好。適正株間で光と養分が均等に行き渡る。', scores: { harvest: +10, quality: +10 }, card: null }
+      },
+      {
+        text: '平畝で密植（株間を狭くして収量アップを狙う）',
+        hint: 'たくさん植えれば収量アップ？',
+        result: { type: 'bad', title: '密植の落とし穴！', desc: '密植すると光・養分・水の競合が起き、イモが小さくなる。排水不良で病害も増加。', scores: { harvest: -10, quality: -10, env: -5 }, card: null }
+      },
+      {
+        text: '段々畑の地形に合わせた等高線植付',
+        hint: '山岳・丘陵地帯向け',
+        result: { type: 'good', title: '土壌侵食を防いだ！', desc: '等高線に沿った畝立ては雨水の流れを分散し、土壌侵食を大幅に軽減。', scores: { harvest: +8, quality: +8, env: +15 }, card: null }
+      }
+    ]
+  },
+  {
+    id: 'hilling',
+    name: '培土（土寄せ）',
+    emoji: '⛰️',
+    desc: '芽が出て生育中の株に土を寄せる作業です。',
+    choices: [
+      {
+        text: '株高20cmの時点で高めに培土',
+        hint: '正しいタイミング',
+        result: { type: 'good', title: '完璧な培土！', desc: '適切な培土でイモが土から出て緑化するのを防いだ。品質向上に大きく貢献。', scores: { harvest: +8, quality: +12 }, card: 'hilling' }
+      },
+      {
+        text: '培土のタイミングを遅らせる（まだ大丈夫だろう）',
+        hint: '忙しくて後回しに…',
+        result: { type: 'bad', title: '緑化イモ発生！', desc: '培土が遅れ、イモが地表に露出して緑化した。ソラニンが生成され食用不可に。品質スコアが大幅低下。', scores: { harvest: -5, quality: -20, health: -15 }, card: 'hilling' }
+      },
+      {
+        text: '2回培土（第1回+追加）でしっかり高畝に',
+        hint: '手間はかかるが効果的',
+        result: { type: 'good', title: '丁寧な管理で品質向上！', desc: '2回の培土でイモのサイズが均一化。緑化ゼロで品質が大幅アップ。', scores: { harvest: +10, quality: +15 }, card: null }
+      }
+    ]
+  },
+  {
+    id: 'irrigation',
+    name: '灌漑管理',
+    emoji: '💧',
+    desc: '水の管理は収量と品質を左右します。',
+    choices: [
+      {
+        text: '土の乾燥具合を見て畝間灌漑（適切な量）',
+        hint: '状態を見極めて管理',
+        result: { type: 'good', title: '水管理が上手い！', desc: 'イモの肥大期に適切な水分補給。サイズが揃い収量・品質ともに向上。', scores: { harvest: +10, quality: +8 }, card: null }
+      },
+      {
+        text: '雨頼みで灌漑なし',
+        hint: 'コストゼロだが…',
+        result: { type: 'neutral', title: '乾燥ストレスが発生', desc: '晴天が続き、肥大期に水不足。イモが小さくなり収量が15%低下した。', scores: { harvest: -12, quality: -8 }, card: null }
+      },
+      {
+        text: 'たっぷり灌漑（水は多いほど良い）',
+        hint: '水をたくさん与えれば安心？',
+        result: { type: 'bad', title: '過湿で腐敗が！', desc: '過剰な水で土壌が過湿状態になり、軟腐病が発生。イモの一部が腐れてしまった。', scores: { harvest: -10, quality: -12, env: -5 }, card: null }
+      }
+    ]
+  },
+  {
+    id: 'disease_mgmt',
+    name: '病害虫対応',
+    emoji: '🦠',
+    desc: '生育中に問題が発生しています。対応を選んでください。',
+    isTrap: false, // will be set dynamically
+    choices: [
+      {
+        text: '症状を確認してすぐに適切な薬剤を散布（マスク・手袋着用）',
+        hint: '早期対応・安全に',
+        result: { type: 'good', title: '適切な防除成功！', desc: '早期発見・早期防除で被害を最小限に抑えた。安全装備で人体への影響もなし。', scores: { harvest: +8, quality: +8, health: +5 }, card: 'pesticide_safety' }
+      },
+      {
+        text: '農薬を大量に散布（多ければ多いほど効く）',
+        hint: '念のためたっぷりと',
+        result: { type: 'bad', title: '農薬過剰使用！', desc: '必要以上の農薬散布で残留農薬が基準値超え。収量は守れたが健康・環境・市場評価に大打ち下がり。', scores: { harvest: +3, quality: -5, health: -20, env: -15, community: -10 }, card: 'pesticide_safety' }
+      },
+      {
+        text: '様子見（大したことはないだろう）',
+        hint: 'まだ広がっていないから大丈夫？',
+        result: { type: 'bad', title: '病害が拡大！', desc: '放置したことで病害が圃場全体に広がった。近隣農家にも疫病が波及してしまった。', scores: { harvest: -20, quality: -15, community: -15 }, card: 'late_blight' }
+      }
+    ]
+  },
+  {
+    id: 'harvest',
+    name: '収穫判断',
+    emoji: '🥔',
+    desc: '収穫のタイミングと方法を選びます。',
+    choices: [
+      {
+        text: '茎葉が枯れてから晴天日に収穫',
+        hint: '教科書通りの正しい方法',
+        result: { type: 'good', title: '最高の収穫タイミング！', desc: '完熟・乾燥状態での収穫でイモの品質が最大化。傷も少なく貯蔵性も良好。', scores: { harvest: +12, quality: +12 }, card: null }
+      },
+      {
+        text: '市場価格が高いうちに早めに収穫',
+        hint: '価格が下がる前に！',
+        result: { type: 'neutral', title: '早期収穫のトレードオフ', desc: '価格は良かったが、未熟収穫でイモが小さく、皮が薄くて傷つきやすい。品質スコアが下がった。', scores: { harvest: -5, quality: -10, community: +5 }, card: 'market_timing' }
+      },
+      {
+        text: '雨の日でも急いで収穫',
+        hint: '天候は関係ない？',
+        result: { type: 'bad', title: '雨天収穫で品質悪化！', desc: '濡れた状態での収穫・傷・泥付きで品質が大幅低下。貯蔵中の腐敗リスクも上昇。', scores: { harvest: 0, quality: -18, env: -5 }, card: null }
+      }
+    ]
+  },
+  {
+    id: 'storage',
+    name: '貯蔵・出荷',
+    emoji: '🏠',
+    desc: '収穫したジャガイモの貯蔵と出荷方法を選びます。',
+    choices: [
+      {
+        text: 'キュアリング処理後、適切な温度・湿度で貯蔵',
+        hint: '手間をかけて品質を守る',
+        result: { type: 'good', title: '高品質で長期貯蔵成功！', desc: 'キュアリングで傷が治癒し、腐敗率がゼロに近い。端境期の高値出荷で収入最大化。', scores: { harvest: +5, quality: +15, community: +10 }, card: 'storage_curing' }
+      },
+      {
+        text: '収穫後すぐに全量出荷',
+        hint: '早く売り切りたい',
+        result: { type: 'neutral', title: '早期出荷で価格は低め', desc: '収穫期は市場に出回る量が多く価格が低い。品質は悪くないが収入が少なかった。', scores: { harvest: 0, quality: +5, community: -5 }, card: 'market_timing' }
+      },
+      {
+        text: '光が当たる場所で野積み貯蔵',
+        hint: 'とりあえず積んでおく',
+        result: { type: 'bad', title: '緑化・腐敗が多発！', desc: '光が当たりイモが緑化。腐敗も進んで30%以上が廃棄に。出荷できる量が激減した。', scores: { harvest: -20, quality: -20, health: -10 }, card: null }
+      }
+    ]
+  },
+  {
+    id: 'sales',
+    name: '販売先の選択',
+    emoji: '💰',
+    desc: 'いよいよ販売です。収穫量と品質に応じて最適な販売先を選びましょう。',
+    isSales: true,
+    choices: [] // 動的に生成
+  }
+];
+
+// ===== TRAP EVENTS =====
+const TRAP_EVENTS = {
+  summer: [
+    {
+      id: 'monsoon',
+      phase: 7,
+      icon: '🌧️',
+      title: '突然の豪雨！モンスーン到来',
+      desc: '予告なしに激しい雨が降り始めた。畑が水浸しになっている。どう対応する？',
+      choices: [
+        { text: '事前に掘っておいた排水溝が機能した（準備済み）', result: { type: 'good', title: '排水設計が功を奏した！', desc: '事前の排水路整備のおかげで浸水を最小限に抑えた。', scores: { harvest: +5, env: +5 }, card: 'monsoon_drain' } },
+        { text: '急いで排水溝を掘る', result: { type: 'neutral', title: '間に合ったが被害あり', desc: '一部は助かったが、浸水した区画のイモが腐敗し始めた。', scores: { harvest: -10, quality: -8 }, card: 'monsoon_drain' } },
+        { text: '何もできない（排水設備なし）', result: { type: 'bad', title: '圃場が浸水！', desc: '排水できず、軟腐病が爆発的に発生。収量の40%が失われた。', scores: { harvest: -25, quality: -20, env: -10 }, card: 'monsoon_drain' } }
+      ]
+    },
+    {
+      id: 'hail',
+      phase: 6,
+      icon: '🌨️',
+      title: '突然の雹（ひょう）！',
+      desc: '山岳地帯特有の雹が突然降ってきた。茎葉が激しく傷ついている。',
+      choices: [
+        { text: 'わら被覆をしていたので被害が軽減された', result: { type: 'good', title: 'わら被覆が効果的！', desc: '事前のわら被覆が雹から葉を守った。被害は最小限。', scores: { harvest: 0, quality: +5 }, card: null } },
+        { text: '被害を確認して追肥で回復を促す', result: { type: 'neutral', title: '回復作業開始', desc: '追肥で生育回復を試みた。収量への影響は最小限に抑えられた。', scores: { harvest: -8, quality: -5 }, card: null } },
+        { text: '何もしない（様子見）', result: { type: 'bad', title: '二次感染が発生！', desc: '傷ついた葉から病菌が侵入。疫病と軟腐病が同時発生してしまった。', scores: { harvest: -20, quality: -15 }, card: 'late_blight' } }
+      ]
+    }
+  ],
+  winter: [
+    {
+      id: 'dry_spell',
+      phase: 5,
+      icon: '☀️',
+      title: '予想外の長期乾燥！',
+      desc: '冬作の時期に雨が全く降らない乾燥が2週間続いている。',
+      choices: [
+        { text: '川から引水して緊急灌漑', result: { type: 'good', title: '灌漑で危機を乗り越えた！', desc: '適切な灌漑でイモ肥大期の水不足を回避。収量への影響なし。', scores: { harvest: +5, quality: +5 }, card: null } },
+        { text: 'わらマルチで水分蒸発を抑える', result: { type: 'neutral', title: '被害を軽減', desc: 'マルチ効果で土壌水分を維持。灌漑なしよりは被害を抑えられた。', scores: { harvest: -5, quality: -3 }, card: null } },
+        { text: '何もしない（雨が降るまで待つ）', result: { type: 'bad', title: '深刻な乾燥ストレス！', desc: 'イモ肥大期の水不足で収量が35%減少。芋が小さく品質も低下した。', scores: { harvest: -20, quality: -15 }, card: null } }
+      ]
+    },
+    {
+      id: 'monkey',
+      phase: 8,
+      icon: '🐒',
+      title: 'サルの被害！（テライ地帯）',
+      desc: '群れのサルが畑に侵入し、作物を掘り起こしている！',
+      choices: [
+        { text: '事前に設置した柵が機能した', result: { type: 'good', title: '柵が効果的！', desc: '事前の柵設置で被害ゼロ。近隣農家にも柵設置を勧めた。', scores: { harvest: +5, community: +10 }, card: null } },
+        { text: '大声で追い払う', result: { type: 'neutral', title: '今日は何とか追い払ったが…', desc: '今日は大丈夫だったが、明日また来るかもしれない。根本的な対策が必要。', scores: { harvest: -5, quality: -5 }, card: null } },
+        { text: '何もできない', result: { type: 'bad', title: '大きな被害！', desc: 'サルによる掘り起こしで収量の20%が失われた。', scores: { harvest: -18, quality: -10 }, card: null } }
+      ]
+    }
+  ]
+};
+
+// ===== SALES PHASE =====
+function getSalesChoices() {
+  const h = state.scores.harvest;
+  const q = state.scores.quality;
+  const choices = [];
+
+  // 常に選択可能：市場（ハート）販売
+  choices.push({
+    id: 'market',
+    icon: '🏪',
+    name: '市場（ハート）販売',
+    price: '低〜中',
+    work: '少ない',
+    risk: '低い',
+    desc: '地元の市場に持ち込む。手軽だが収穫期は価格が低い。',
+    available: true,
+    result: {
+      type: 'neutral',
+      title: '市場で販売完了',
+      desc: '手軽に売れたが、収穫期は出回り量が多く価格は低め。来年は販売タイミングを工夫したい。',
+      scores: { community: +5 },
+      card: 'market_timing'
+    }
+  });
+
+  // 常に選択可能：仲買人
+  choices.push({
+    id: 'broker',
+    icon: '🤝',
+    name: '仲買人への販売',
+    price: '中',
+    work: '少ない',
+    risk: '中',
+    desc: '仲買人が畑まで引き取りに来る。交渉次第で価格が変わる。',
+    available: true,
+    result: {
+      type: h >= 60 ? 'good' : 'neutral',
+      title: h >= 60 ? '仲買人と好条件で契約！' : '仲買人に買い叩かれた…',
+      desc: h >= 60
+        ? '収量が多かったので仲買人も好条件を提示。まとまった収入になった。'
+        : '収量が少なく足元を見られた。価格交渉で不利になってしまった。',
+      scores: h >= 60
+        ? { harvest: +8, community: +5 }
+        : { harvest: -5, community: -5 },
+      card: 'broker_risk'
+    }
+  });
+
+  // 高品質の場合のみ：個人・直売販売
+  if (q >= 60) {
+    choices.push({
+      id: 'direct',
+      icon: '🛒',
+      name: '個人・直売販売',
+      price: '高い',
+      work: '多い',
+      risk: '中',
+      desc: '消費者に直接販売。高値だが輸送・販売の手間がかかる。',
+      available: true,
+      result: {
+        type: 'good',
+        title: '直売で高収入！',
+        desc: '品質の良さが消費者に伝わり、高値で完売。常連客もできて次シーズンも期待できる。',
+        scores: { harvest: +15, quality: +5, community: +15 },
+        card: 'direct_sales'
+      }
+    });
+  } else {
+    choices.push({
+      id: 'direct_locked',
+      icon: '🔒',
+      name: '個人・直売販売',
+      price: '高い',
+      work: '多い',
+      risk: '中',
+      desc: '品質スコアが60以上で解放。消費者に直接販売できれば高収入。',
+      available: false,
+      lockReason: `品質スコア不足（現在: ${q}点 / 必要: 60点以上）`
+    });
+  }
+
+  // 農協・契約栽培（収量+品質の合計が高い場合）
+  if (h >= 55 && q >= 55) {
+    choices.push({
+      id: 'coop',
+      icon: '🤲',
+      name: '農協・契約栽培出荷',
+      price: '中〜高（安定）',
+      work: '中程度',
+      risk: '低い',
+      desc: '事前契約に基づく安定出荷。品質・数量基準を満たせば確実に売れる。',
+      available: true,
+      result: {
+        type: 'good',
+        title: '農協契約で安定収入！',
+        desc: '品質・収量ともに基準をクリア。安定した価格で全量買い取ってもらえた。農協の技術指導も受けられる。',
+        scores: { harvest: +10, quality: +8, community: +20, env: +5 },
+        card: 'cooperative'
+      }
+    });
+  } else {
+    choices.push({
+      id: 'coop_locked',
+      icon: '🔒',
+      name: '農協・契約栽培出荷',
+      price: '中〜高（安定）',
+      work: '中程度',
+      risk: '低い',
+      desc: '収穫量・品質スコアが共に55以上で解放。安定した契約販売が可能。',
+      available: false,
+      lockReason: `収穫量(${h})・品質(${q})スコアが両方55以上必要`
+    });
+  }
+
+  return choices;
+}
+
+function renderSalesPhase(main) {
+  const choices = getSalesChoices();
+  const h = state.scores.harvest;
+  const q = state.scores.quality;
+
+  const availableCount = choices.filter(c => c.available).length;
+
+  const choicesHtml = choices.map((c, i) => {
+    if (!c.available) {
+      return `
+        <div class="choice-btn" style="opacity:0.5;cursor:not-allowed;background:#f5f5f5">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <span style="font-size:1.4rem">${c.icon}</span>
+            <div>
+              <div class="choice-label" style="color:#aaa">🔒 ロック中</div>
+              <div class="choice-text" style="color:#999">${c.name}</div>
+            </div>
+          </div>
+          <div class="choice-hint" style="color:#bbb">⚠️ ${c.lockReason}</div>
+        </div>
+      `;
+    }
+    return `
+      <button class="choice-btn" onclick="makeSalesChoice(${i})">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:1.6rem">${c.icon}</span>
+          <div>
+            <div class="choice-label">販売先 ${String.fromCharCode(65 + choices.filter((x,xi) => x.available && xi <= i).length - 1)}</div>
+            <div class="choice-text">${c.name}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+          <span style="background:#e8f5e9;color:#2e7d32;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">💴 価格: ${c.price}</span>
+          <span style="background:#fff3e0;color:#e65100;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">💪 手間: ${c.work}</span>
+          <span style="background:#fce4ec;color:#880e4f;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">⚡ リスク: ${c.risk}</span>
+        </div>
+        <div class="choice-hint">💭 ${c.desc}</div>
+      </button>
+    `;
+  }).join('');
+
+  const dots = PHASES.map((p, i) => {
+    const cls = i < state.phase ? 'done' : i === state.phase ? 'current' : '';
+    return `<div class="phase-dot ${cls}"></div>`;
+  }).join('');
+
+  main.innerHTML = `
+    <div class="phase-indicator">
+      <div class="phase-badge">PHASE ${state.phase + 1}/${PHASES.length}</div>
+      <div class="phase-name">販売先の選択</div>
+      <div class="phase-dots">${dots}</div>
+    </div>
+    <div class="scene-card" style="border-left-color:var(--sun)">
+      <span class="scene-emoji">💰</span>
+      <div class="scene-title">いよいよ販売！</div>
+      <div class="scene-desc">
+        今シーズンの収穫物を売る時がきた。<br>
+        どこに売るかで収入と地域への影響が大きく変わる。
+      </div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+        <div style="background:#f0fff0;border:1px solid #4a7c3f;border-radius:10px;padding:6px 12px;text-align:center">
+          <div style="font-size:0.65rem;color:#666">🥔 収穫量スコア</div>
+          <div style="font-size:1.1rem;font-weight:900;color:${h>=60?'#2e7d32':'#c0392b'}">${h}点</div>
+        </div>
+        <div style="background:#f0fff0;border:1px solid #4a7c3f;border-radius:10px;padding:6px 12px;text-align:center">
+          <div style="font-size:0.65rem;color:#666">⭐ 品質スコア</div>
+          <div style="font-size:1.1rem;font-weight:900;color:${q>=60?'#2e7d32':'#c0392b'}">${q}点</div>
+        </div>
+        <div style="background:#fff9e6;border:1px solid var(--potato);border-radius:10px;padding:6px 12px;text-align:center">
+          <div style="font-size:0.65rem;color:#666">🔓 解放済み</div>
+          <div style="font-size:1.1rem;font-weight:900;color:var(--sun)">${availableCount}/4</div>
+        </div>
+      </div>
+    </div>
+    <div class="choices">${choicesHtml}</div>
+  `;
+}
+
+function makeSalesChoice(i) {
+  const choices = getSalesChoices();
+  const choice = choices[i];
+  if (!choice || !choice.available) return;
+
+  const result = choice.result;
+  applyScores(result.scores);
+
+  if (result.card && !state.cards.includes(result.card)) {
+    state.cards.push(result.card);
+  }
+
+  // 販売先の名前を結果に埋め込む
+  state.lastResult = {
+    ...result,
+    salesChannel: choice.name,
+    salesIcon: choice.icon
+  };
+  state.screen = 'sales_result';
+  render();
+}
+
+function renderSalesResult(main) {
+  const result = state.lastResult;
+  const cls = result.type === 'good' ? 'result-good' : result.type === 'bad' ? 'result-bad' : 'result-neutral';
+  const icon = result.type === 'good' ? '✅' : result.type === 'bad' ? '❌' : '⚠️';
+
+  const scoreChanges = Object.entries(result.scores).map(([k, v]) => {
+    if (v === 0) return '';
+    const label = SCORE_LABELS.find(s => s.key === k);
+    const cls2 = v > 0 ? 'up' : 'down';
+    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${v}</div>`;
+  }).join('');
+
+  let cardHtml = '';
+  if (result.card && KNOWLEDGE_CARDS[result.card]) {
+    const card = KNOWLEDGE_CARDS[result.card];
+    cardHtml = `
+      <div class="knowledge-card">
+        <div class="knowledge-header">
+          <span class="card-icon">${card.icon}</span>
+          <span class="card-new-badge">📚 知識カード獲得！</span>
+        </div>
+        <div class="knowledge-title">${card.title}</div>
+        <div class="knowledge-text">${card.text}</div>
+      </div>
+    `;
+  }
+
+  main.innerHTML = `
+    <div style="text-align:center;padding:8px 0 14px">
+      <div style="font-size:2.5rem">${result.salesIcon}</div>
+      <div style="font-size:0.75rem;color:#888;margin-top:4px">販売先: <strong>${result.salesChannel}</strong></div>
+    </div>
+    <div class="result-card ${cls}">
+      <div class="result-title">${icon} ${result.title}</div>
+      <div class="result-desc">${result.desc}</div>
+      <div class="score-changes">${scoreChanges}</div>
+    </div>
+    ${cardHtml}
+    <button class="next-btn" onclick="goToFinal()">🏁 最終結果を見る</button>
+  `;
+}
+
+function goToFinal() {
+  state.screen = 'final';
+  render();
+}
+const SCORE_LABELS = [
+  { key: 'harvest', label: '🥔収穫量', emoji: '🥔', short: '収穫' },
+  { key: 'quality', label: '⭐品質', emoji: '⭐', short: '品質' },
+  { key: 'health', label: '🧑‍🤝‍🧑人体', emoji: '🧑', short: '人体' },
+  { key: 'env', label: '🌿環境', emoji: '🌿', short: '環境' },
+  { key: 'community', label: '🏘地域', emoji: '🏘', short: '地域' }
+];
+
+// ===== RENDER =====
+function render() {
+  const main = document.getElementById('main');
+  const header = document.getElementById('header');
+  const albumBtn = document.getElementById('album-btn');
+  const scorebar = document.getElementById('score-bar');
+
+  // Score bar
+  if (state.screen !== 'setup') {
+    scorebar.innerHTML = SCORE_LABELS.map(s => {
+      const v = state.scores[s.key];
+      const cls = v >= 50 ? 'positive' : 'negative';
+      return `<div class="score-item ${cls}"><span style="line-height:1">${s.emoji}</span><span class="val">${v}</span><span style="font-size:0.55rem;opacity:0.85;line-height:1">${s.short}</span></div>`;
+    }).join('');
+    albumBtn.style.display = 'flex';
+    document.getElementById('card-badge').textContent = state.cards.length;
+  } else {
+    scorebar.innerHTML = '';
+    albumBtn.style.display = 'none';
+  }
+
+  if (state.screen === 'setup') renderSetup(main);
+  else if (state.screen === 'phase') {
+    const phase = PHASES[state.phase];
+    if (phase && phase.isSales) renderSalesPhase(main);
+    else renderPhase(main);
+  }
+  else if (state.screen === 'result') renderResult(main);
+  else if (state.screen === 'sales_result') renderSalesResult(main);
+  else if (state.screen === 'trap') renderTrap(main);
+  else if (state.screen === 'trap_result') renderTrapResult(main);
+  else if (state.screen === 'gameover') renderGameOver(main);
+  else if (state.screen === 'final') renderFinal(main);
+}
+
+function renderSetup(main) {
+  main.innerHTML = `
+    <div class="setup-screen">
+      <div class="setup-title">じゃがいも<br>マスター</div>
+      <div class="setup-subtitle">〜ネパール農家への道〜</div>
+      <div class="setup-potato">🥔</div>
+      <div class="setup-section">
+        <h3>🌤️ 作型を選んでください</h3>
+        <div class="option-grid">
+          <button class="option-btn ${state.season==='summer'?'selected':''}" onclick="selectSeason('summer')">
+            <span class="opt-emoji">☀️</span>
+            <div class="opt-name">夏作</div>
+            <div class="opt-desc">丘陵・山岳地帯<br>1〜3月植付</div>
+          </button>
+          <button class="option-btn ${state.season==='winter'?'selected':''}" onclick="selectSeason('winter')">
+            <span class="opt-emoji">❄️</span>
+            <div class="opt-name">冬作</div>
+            <div class="opt-desc">テライ・丘陵低地<br>10〜11月植付</div>
+          </button>
+        </div>
+      </div>
+      <div class="setup-section">
+        <h3>🗺️ 栽培地帯を選んでください</h3>
+        <div class="option-grid">
+          <button class="option-btn ${state.region==='terai'?'selected':''}" onclick="selectRegion('terai')">
+            <span class="opt-emoji">🌾</span>
+            <div class="opt-name">テライ平野</div>
+            <div class="opt-desc">〜300m<br>高温多湿</div>
+          </button>
+          <button class="option-btn ${state.region==='hill'?'selected':''}" onclick="selectRegion('hill')">
+            <span class="opt-emoji">⛰️</span>
+            <div class="opt-name">丘陵地帯</div>
+            <div class="opt-desc">300〜2000m<br>温暖・段々畑</div>
+          </button>
+          <button class="option-btn ${state.region==='mountain'?'selected':''}" onclick="selectRegion('mountain')">
+            <span class="opt-emoji">🏔️</span>
+            <div class="opt-name">山岳地帯</div>
+            <div class="opt-desc">2000m〜<br>冷涼・霜リスク</div>
+          </button>
+        </div>
+      </div>
+      <button class="start-btn" onclick="startGame()" ${!state.season||!state.region?'disabled style="opacity:0.5"':''}>
+        🌱 栽培スタート！
+      </button>
+    </div>
+  `;
+}
+
+function renderPhase(main) {
+  const phase = PHASES[state.phase];
+  const dots = PHASES.map((p, i) => {
+    const cls = i < state.phase ? 'done' : i === state.phase ? 'current' : '';
+    return `<div class="phase-dot ${cls}"></div>`;
+  }).join('');
+
+  const seasonLabel = state.season === 'summer' ? '☀️ 夏作' : '❄️ 冬作';
+
+  main.innerHTML = `
+    <div class="phase-indicator">
+      <div class="phase-badge">PHASE ${state.phase + 1}/${PHASES.length}</div>
+      <div class="phase-name">${phase.name}</div>
+      <div class="phase-dots">${dots}</div>
+    </div>
+    <div class="scene-card">
+      <span class="season-badge">${seasonLabel} / ${state.region === 'terai' ? 'テライ平野' : state.region === 'hill' ? '丘陵地帯' : '山岳地帯'}</span>
+      <span class="scene-emoji">${phase.emoji}</span>
+      <div class="scene-title">${phase.name}</div>
+      <div class="scene-desc">${phase.desc}</div>
+    </div>
+    <div class="choices">
+      ${phase.choices.map((c, i) => `
+        <button class="choice-btn" onclick="makeChoice(${i})">
+          <div class="choice-label">選択肢 ${String.fromCharCode(65+i)}</div>
+          <div class="choice-text">${c.text}</div>
+          <div class="choice-hint">💭 ${c.hint}</div>
+        </button>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderResult(main) {
+  const result = state.lastResult;
+  const cls = result.type === 'good' ? 'result-good' : result.type === 'bad' ? 'result-bad' : 'result-neutral';
+  const icon = result.type === 'good' ? '✅' : result.type === 'bad' ? '❌' : '⚠️';
+
+  const scoreChanges = Object.entries(result.scores).map(([k, v]) => {
+    if (v === 0) return '';
+    const label = SCORE_LABELS.find(s => s.key === k);
+    const cls2 = v > 0 ? 'up' : 'down';
+    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${v}</div>`;
+  }).join('');
+
+  let cardHtml = '';
+  if (result.card && KNOWLEDGE_CARDS[result.card]) {
+    const card = KNOWLEDGE_CARDS[result.card];
+    cardHtml = `
+      <div class="knowledge-card">
+        <div class="knowledge-header">
+          <span class="card-icon">${card.icon}</span>
+          <span class="card-new-badge">📚 知識カード獲得！</span>
+        </div>
+        <div class="knowledge-title">${card.title}</div>
+        <div class="knowledge-text">${card.text}</div>
+      </div>
+    `;
+  }
+
+  const isLast = state.phase >= PHASES.length - 2; // 最後から2番目=貯蔵フェーズ
+  const isSalesNext = state.phase === PHASES.length - 2;
+  const nextLabel = isSalesNext ? '💰 販売フェーズへ' : isLast ? '🏁 最終結果を見る' : '▶ 次のフェーズへ';
+
+  main.innerHTML = `
+    <div class="result-card ${cls}">
+      <div class="result-title">${icon} ${result.title}</div>
+      <div class="result-desc">${result.desc}</div>
+      <div class="score-changes">${scoreChanges}</div>
+    </div>
+    ${cardHtml}
+    <button class="next-btn" onclick="nextPhase()">${nextLabel}</button>
+  `;
+}
+
+function renderTrap(main) {
+  const trap = state.currentTrap;
+  main.innerHTML = `
+    <div class="trap-card">
+      <div class="trap-header">
+        <span class="trap-icon">${trap.icon}</span>
+        <span class="trap-label">⚠️ 突発イベント</span>
+      </div>
+      <div class="trap-title">${trap.title}</div>
+      <div class="trap-desc">${trap.desc}</div>
+    </div>
+    <div class="choices">
+      ${trap.choices.map((c, i) => `
+        <button class="choice-btn" onclick="makeTrapChoice(${i})">
+          <div class="choice-label">対応 ${String.fromCharCode(65+i)}</div>
+          <div class="choice-text">${c.text}</div>
+        </button>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderTrapResult(main) {
+  const result = state.lastTrapResult;
+  const cls = result.type === 'good' ? 'result-good' : result.type === 'bad' ? 'result-bad' : 'result-neutral';
+  const icon = result.type === 'good' ? '✅' : result.type === 'bad' ? '❌' : '⚠️';
+
+  const scoreChanges = Object.entries(result.scores).map(([k, v]) => {
+    if (v === 0) return '';
+    const label = SCORE_LABELS.find(s => s.key === k);
+    const cls2 = v > 0 ? 'up' : 'down';
+    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${v}</div>`;
+  }).join('');
+
+  let cardHtml = '';
+  if (result.card && KNOWLEDGE_CARDS[result.card]) {
+    const card = KNOWLEDGE_CARDS[result.card];
+    cardHtml = `
+      <div class="knowledge-card">
+        <div class="knowledge-header">
+          <span class="card-icon">${card.icon}</span>
+          <span class="card-new-badge">📚 知識カード獲得！</span>
+        </div>
+        <div class="knowledge-title">${card.title}</div>
+        <div class="knowledge-text">${card.text}</div>
+      </div>
+    `;
+  }
+
+  main.innerHTML = `
+    <div class="result-card ${cls}">
+      <div class="result-title">${icon} ${result.title}</div>
+      <div class="result-desc">${result.desc}</div>
+      <div class="score-changes">${scoreChanges}</div>
+    </div>
+    ${cardHtml}
+    <button class="next-btn" onclick="continueAfterTrap()">▶ 次へ</button>
+  `;
+}
+
+function renderGameOver(main) {
+  main.innerHTML = `
+    <div class="gameover-screen">
+      <div class="dead-plant">🥀</div>
+      <div class="gameover-title">作物が全滅…</div>
+      <div class="gameover-desc">
+        ${state.gameOverReason}<br><br>
+        でも大丈夫。失敗から学ぶのが農業の極意。<br>
+        もう一度挑戦しましょう！
+      </div>
+      ${state.cards.length > 0 ? `
+        <div class="cards-collected">
+          <h3>📚 今回集めた知識カード（${state.cards.length}枚）</h3>
+          <div class="card-chips">
+            ${state.cards.map(id => {
+              const c = KNOWLEDGE_CARDS[id];
+              return c ? `<div class="card-chip">${c.icon} ${c.title}</div>` : '';
+            }).join('')}
+          </div>
+        </div>
+      ` : ''}
+      <button class="retry-btn" onclick="restartGame()">🔄 もう一度挑戦する</button>
+    </div>
+  `;
+}
+
+function renderFinal(main) {
+  const total = Object.values(state.scores).reduce((a,b) => a+b, 0);
+  const avg = Math.round(total / 5);
+
+  let rank, rankEmoji, rankDesc;
+  if (avg >= 85) { rank = 'じゃがいも名人'; rankEmoji = '🏆'; rankDesc = '完璧な栽培管理で最高の収穫！ネパール農業の未来を担う存在です。'; }
+  else if (avg >= 70) { rank = 'ベテラン農家'; rankEmoji = '🥇'; rankDesc = '安定した栽培技術で高品質なジャガイモを生産。地域の模範的な農家です。'; }
+  else if (avg >= 55) { rank = '一人前の農家'; rankEmoji = '🥈'; rankDesc = 'バランスの取れた栽培ができています。さらなる技術向上を目指して！'; }
+  else if (avg >= 40) { rank = '見習い農家'; rankEmoji = '🥉'; rankDesc = 'まだ学ぶことが多いですが、基礎は身についています。経験を積みましょう。'; }
+  else { rank = '農業初心者'; rankEmoji = '🌱'; rankDesc = '失敗を恐れずに！知識カードを活用して再挑戦してみてください。'; }
+
+  const scoreRows = SCORE_LABELS.map(s => {
+    const v = state.scores[s.key];
+    const pct = Math.max(0, Math.min(100, v));
+    return `
+      <div class="final-score-row">
+        <span>${s.label}</span>
+        <div class="score-bar-visual"><div class="score-bar-fill" style="width:${pct}%"></div></div>
+        <span style="font-weight:900;min-width:36px;text-align:right">${v}</span>
+      </div>
+    `;
+  }).join('');
+
+  main.innerHTML = `
+    <div class="final-screen">
+      <div class="final-title">🌾 収穫完了！</div>
+      <div class="rank-display">${rankEmoji}</div>
+      <div class="rank-name">${rank}</div>
+      <p style="font-size:0.78rem;color:#666;margin-bottom:14px;line-height:1.6">${rankDesc}</p>
+      <div class="final-scores">
+        <div style="font-size:0.8rem;font-weight:900;color:#888;margin-bottom:8px">スコア詳細（平均: ${avg}点）</div>
+        ${scoreRows}
+      </div>
+      ${state.cards.length > 0 ? `
+        <div class="cards-collected">
+          <h3>📚 集めた知識カード（${state.cards.length}枚）</h3>
+          <div class="card-chips">
+            ${state.cards.map(id => {
+              const c = KNOWLEDGE_CARDS[id];
+              return c ? `<div class="card-chip">${c.icon} ${c.title}</div>` : '';
+            }).join('')}
+          </div>
+        </div>
+      ` : ''}
+      <button class="retry-btn" onclick="restartGame()">🔄 もう一度挑戦する</button>
+    </div>
+  `;
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.score-bar-fill').forEach(el => {
+      el.style.width = el.style.width;
+    });
+  }, 100);
+}
+
+// ===== ACTIONS =====
+function selectSeason(s) { state.season = s; render(); }
+function selectRegion(r) { state.region = r; render(); }
+
+function startGame() {
+  if (!state.season || !state.region) return;
+  state.screen = 'phase';
+  state.phase = 0;
+  state.scores = { harvest: 50, quality: 50, health: 50, env: 50, community: 50 };
+  state.cards = [];
+  state.gameOver = false;
+  render();
+}
+
+function makeChoice(i) {
+  const phase = PHASES[state.phase];
+  const choice = phase.choices[i];
+  const result = choice.result;
+
+  // Apply scores
+  applyScores(result.scores);
+
+  // Collect card
+  if (result.card && !state.cards.includes(result.card)) {
+    state.cards.push(result.card);
+  }
+
+  state.lastResult = result;
+  state.screen = 'result';
+
+  // Check game over
+  if (checkGameOver()) return;
+
+  render();
+}
+
+function applyScores(changes) {
+  Object.entries(changes).forEach(([k, v]) => {
+    state.scores[k] = Math.max(0, Math.min(100, (state.scores[k] || 50) + v));
+  });
+}
+
+function checkGameOver() {
+  if (state.scores.harvest <= 5) {
+    state.gameOverReason = '収穫量スコアがゼロになりました。作物が枯れてしまいました。';
+    state.screen = 'gameover';
+    render();
+    return true;
+  }
+  return false;
+}
+
+function nextPhase() {
+  // Check for trap event before next phase
+  const nextPhaseIndex = state.phase + 1;
+  const traps = TRAP_EVENTS[state.season] || [];
+  const trap = traps.find(t => t.phase === nextPhaseIndex && !state.history.includes('trap_' + t.id));
+
+  if (trap) {
+    state.currentTrap = trap;
+    state.history.push('trap_' + trap.id);
+    state.screen = 'trap';
+    render();
+    return;
+  }
+
+  state.phase++;
+  if (state.phase >= PHASES.length) {
+    state.screen = 'final';
+  } else {
+    state.screen = 'phase';
+  }
+  render();
+}
+
+function continueAfterTrap() {
+  state.phase++;
+  if (state.phase >= PHASES.length) {
+    state.screen = 'final';
+  } else {
+    state.screen = 'phase';
+  }
+  render();
+}
+
+function makeTrapChoice(i) {
+  const trap = state.currentTrap;
+  const choice = trap.choices[i];
+  const result = choice.result;
+
+  applyScores(result.scores);
+
+  if (result.card && !state.cards.includes(result.card)) {
+    state.cards.push(result.card);
+  }
+
+  state.lastTrapResult = result;
+  state.screen = 'trap_result';
+
+  if (checkGameOver()) return;
+
+  render();
+}
+
+function restartGame() {
+  state.screen = 'setup';
+  state.phase = 0;
+  state.scores = { harvest: 50, quality: 50, health: 50, env: 50, community: 50 };
+  state.cards = [];
+  state.history = [];
+  state.gameOver = false;
+  render();
+}
+
+// ===== ALBUM =====
+function showAlbum() {
+  const overlay = document.createElement('div');
+  overlay.className = 'album-overlay';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+  const cardsHtml = state.cards.length === 0
+    ? '<div class="album-empty">まだカードがありません。<br>良い選択をすると獲得できます！</div>'
+    : state.cards.map(id => {
+        const c = KNOWLEDGE_CARDS[id];
+        if (!c) return '';
+        return `
+          <div class="album-card">
+            <span class="card-icon">${c.icon}</span>
+            <div class="card-body">
+              <div class="card-title">${c.title}</div>
+              <div class="card-text">${c.text}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+  overlay.innerHTML = `
+    <div class="album-panel">
+      <div class="album-title">📚 知識カード図鑑（${state.cards.length}枚）</div>
+      ${cardsHtml}
+      <button class="close-btn" onclick="document.querySelector('.album-overlay').remove()">閉じる</button>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+}
+
+// ===== INIT =====
+render();
+</script>
+</body>
+</html>
