@@ -8,19 +8,23 @@ Open `index.html` directly in any modern web browser. No build process, server, 
 
 ## Architecture
 
-The entire application lives in a single file: `index.html` (~1,902 lines).
+The entire application lives in a single file: `index.html` (~2,900 lines). Sections are marked with `// =====` comments.
 
 **Layout of index.html:**
-- Lines 1–789: HTML structure and CSS styling (mobile-first, max-width 480px)
-- Lines 790–800: `state` object — the single source of truth for all game state
-- Lines 803–880: `KNOWLEDGE_CARDS` object (keyed by string ID, e.g. `variety_jyoti`) — educational cards (Japanese)
-- Lines 882–1124: `PHASES` array — 11 farming phases, each with choices and score deltas
-- Lines 1125–1295: `TRAP_EVENTS` — season-specific random challenge events (keyed by season)
-- Lines 1297–1451: Sales phase logic — `renderSalesPhase` and `renderSalesResult`, dynamically generated based on current scores
-- Lines 1452–1749: `render()` dispatcher and all `render*()` functions — one per screen
-- Lines 1751–1863: Action handlers (`makeChoice`, `makeTrapChoice`, `nextPhase`, `startGame`, `restartGame`, etc.)
-- Lines 1865–1896: `showAlbum()` — knowledge card overlay display
-- Line 1899: `render()` initialization call
+- Lines 1–799: HTML structure and CSS styling (mobile-first, max-width 480px)
+- Lines 800–838: Language helpers (`t()`, `num()`, `setLang()`, `renderLanguage()`)
+- Lines 839–852: `state` object — the single source of truth for all game state
+- Lines 853–931: `KNOWLEDGE_CARDS` object (keyed by string ID, e.g. `variety_jyoti`)
+- Lines 932–1174: `PHASES` array — 11 farming phases, each with choices and score deltas
+- Lines 1175–1230: `TRAP_EVENTS` — season-specific random challenge events (keyed by season)
+- Lines 1231–1500: Sales phase logic (dynamically generated from current scores) and `SCORE_LABELS`
+- Lines 1501–1802: `render()` dispatcher and `render*()` functions — one per screen
+- Lines 1803–1916: Action handlers
+- Lines 1917–1949: `showAlbum()`
+- Lines 1950–2891: `TRANSLATIONS` — `[Japanese, English, Nepali]` triples
+- End: `render()` initialization call
+
+**Languages:** Japanese (default), Nepali, English; `state.lang`, saved in localStorage. Game data stays in Japanese, and the Japanese string is the translation key: render functions wrap text in `t()`. When adding or editing Japanese text, update the matching `TRANSLATIONS` entry — unmatched strings fall back to Japanese. Wrap displayed numbers in `num()` (Devanagari digits in Nepali).
 
 **Game flow (state machine):**
 ```

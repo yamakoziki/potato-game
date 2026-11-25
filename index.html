@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>じゃがいもマスター〜ネパール農家への道〜</title>
+<title>ジャガイモ栽培ゲーム</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Fredoka+One&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans+Devanagari:wght@400;700;900&family=Fredoka+One&display=swap');
 
   :root {
     --earth: #5c3d1e;
@@ -23,7 +23,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Noto Sans Devanagari', sans-serif;
     background: linear-gradient(180deg, #a8d5e8 0%, #c5e8b0 40%, #8B5E3C 100%);
     min-height: 100vh;
     display: flex;
@@ -53,7 +53,7 @@
   }
 
   #header h1 {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Fredoka One', 'Noto Sans Devanagari', cursive;
     font-size: 1.4rem;
     letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
@@ -406,7 +406,7 @@
     padding: 14px;
     font-size: 1rem;
     font-weight: 900;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Noto Sans Devanagari', sans-serif;
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 4px 12px rgba(74,124,63,0.4);
@@ -423,7 +423,7 @@
   }
 
   .setup-title {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Fredoka One', 'Noto Sans Devanagari', cursive;
     font-size: 2rem;
     color: var(--earth);
     margin-bottom: 4px;
@@ -480,7 +480,7 @@
     cursor: pointer;
     text-align: center;
     transition: all 0.2s;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Noto Sans Devanagari', sans-serif;
   }
 
   .option-btn.selected {
@@ -502,7 +502,7 @@
     padding: 16px;
     font-size: 1.1rem;
     font-weight: 900;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Noto Sans Devanagari', sans-serif;
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 4px 16px rgba(245,166,35,0.5);
@@ -521,7 +521,7 @@
   .gameover-emoji { font-size: 5rem; margin: 20px 0; }
 
   .gameover-title {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Fredoka One', 'Noto Sans Devanagari', cursive;
     font-size: 1.8rem;
     color: var(--danger);
     margin-bottom: 8px;
@@ -541,7 +541,7 @@
   }
 
   .final-title {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Fredoka One', 'Noto Sans Devanagari', cursive;
     font-size: 1.6rem;
     color: var(--earth);
     margin-bottom: 4px;
@@ -634,7 +634,7 @@
     padding: 14px;
     font-size: 1rem;
     font-weight: 900;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Noto Sans Devanagari', sans-serif;
     cursor: pointer;
     margin-bottom: 10px;
     box-shadow: 0 4px 12px rgba(74,124,63,0.4);
@@ -714,7 +714,7 @@
   }
 
   .album-title {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Fredoka One', 'Noto Sans Devanagari', cursive;
     font-size: 1.3rem;
     color: var(--earth);
     text-align: center;
@@ -753,7 +753,7 @@
     padding: 12px;
     font-size: 0.9rem;
     font-weight: 700;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Noto Sans Devanagari', sans-serif;
     cursor: pointer;
     margin-top: 10px;
   }
@@ -770,13 +770,24 @@
     from { transform: rotate(0deg); filter: none; }
     to { transform: rotate(-15deg); filter: grayscale(1); }
   }
+
+  /* ===== LANGUAGE SWITCH ===== */
+  .lang-switch { display: flex; justify-content: flex-end; gap: 6px; margin-bottom: 6px; }
+  .lang-btn {
+    font-family: inherit; font-size: 0.75rem; font-weight: 700; color: white;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 14px; padding: 5px 12px; cursor: pointer;
+  }
+  .lang-btn.active { background: white; color: #2d5a27; }
+  html[lang="ne"] * { letter-spacing: 0 !important; }
 </style>
 </head>
 <body>
 <div id="app">
   <div id="header">
-    <h1>🥔 じゃがいもマスター</h1>
-    <div class="subtitle">〜ネパール農家への道〜</div>
+    <div class="lang-switch" id="lang-switch" role="group" aria-label="Language"></div>
+    <h1 id="app-title">🥔 ジャガイモ栽培ゲーム</h1>
+    <div class="subtitle" id="app-subtitle">〜ネパール農家への道〜</div>
     <div class="score-bar" id="score-bar"></div>
   </div>
   <div id="main"></div>
@@ -786,8 +797,48 @@
 </div>
 
 <script>
+// ===== LANGUAGE =====
+const LANGUAGES = { ne: 'नेपाली', en: 'English', ja: '日本語' };
+
+function loadLang() {
+  try {
+    const saved = localStorage.getItem('potato-lang');
+    if (Object.hasOwn(LANGUAGES, saved)) return saved;
+  } catch (e) { /* storage unavailable */ }
+  return 'ja';
+}
+
+function setLang(lang) {
+  state.lang = lang;
+  try { localStorage.setItem('potato-lang', lang); } catch (e) { /* storage unavailable */ }
+  render();
+}
+
+// Nepali is shown with Devanagari digits
+function num(v) {
+  return state.lang === 'ne' ? String(v).replace(/[0-9]/g, d => '०१२३४५६७८९'[d]) : String(v);
+}
+
+// Translate a Japanese source string (the key in TRANSLATIONS); {name} is filled from params
+function t(ja, params = {}) {
+  const entry = TRANSLATION_MAP.get(ja);
+  const text = state.lang !== 'ja' && entry ? entry[state.lang] : ja;
+  return num(text.replace(/\{(\w+)\}/g, (_, k) => params[k]));
+}
+
+function renderLanguage() {
+  document.documentElement.lang = state.lang;
+  document.title = t('ジャガイモ栽培ゲーム');
+  document.getElementById('app-title').textContent = '🥔 ' + t('ジャガイモ栽培ゲーム');
+  document.getElementById('app-subtitle').textContent = t('〜ネパール農家への道〜');
+  document.getElementById('lang-switch').innerHTML = Object.entries(LANGUAGES).map(([id, name]) =>
+    `<button class="lang-btn ${state.lang === id ? 'active' : ''}" lang="${id}" aria-pressed="${state.lang === id}" onclick="setLang('${id}')">${name}</button>`
+  ).join('');
+}
+
 // ===== STATE =====
 const state = {
+  lang: loadLang(),  // 'ja', 'en' or 'ne'
   screen: 'setup',
   season: null,      // 'summer' or 'winter'
   region: null,      // 'terai', 'hill', 'mountain'
@@ -1254,7 +1305,7 @@ function getSalesChoices() {
       risk: '中',
       desc: '品質スコアが60以上で解放。消費者に直接販売できれば高収入。',
       available: false,
-      lockReason: `品質スコア不足（現在: ${q}点 / 必要: 60点以上）`
+      lockReason: t('品質スコア不足（現在: {q}点 / 必要: 60点以上）', { q })
     });
   }
 
@@ -1287,7 +1338,7 @@ function getSalesChoices() {
       risk: '低い',
       desc: '収穫量・品質スコアが共に55以上で解放。安定した契約販売が可能。',
       available: false,
-      lockReason: `収穫量(${h})・品質(${q})スコアが両方55以上必要`
+      lockReason: t('収穫量({h})・品質({q})スコアが両方55以上必要', { h, q })
     });
   }
 
@@ -1308,8 +1359,8 @@ function renderSalesPhase(main) {
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
             <span style="font-size:1.4rem">${c.icon}</span>
             <div>
-              <div class="choice-label" style="color:#aaa">🔒 ロック中</div>
-              <div class="choice-text" style="color:#999">${c.name}</div>
+              <div class="choice-label" style="color:#aaa">${t('🔒 ロック中')}</div>
+              <div class="choice-text" style="color:#999">${t(c.name)}</div>
             </div>
           </div>
           <div class="choice-hint" style="color:#bbb">⚠️ ${c.lockReason}</div>
@@ -1321,16 +1372,16 @@ function renderSalesPhase(main) {
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
           <span style="font-size:1.6rem">${c.icon}</span>
           <div>
-            <div class="choice-label">販売先 ${String.fromCharCode(65 + choices.filter((x,xi) => x.available && xi <= i).length - 1)}</div>
-            <div class="choice-text">${c.name}</div>
+            <div class="choice-label">${t('販売先')} ${String.fromCharCode(65 + choices.filter((x,xi) => x.available && xi <= i).length - 1)}</div>
+            <div class="choice-text">${t(c.name)}</div>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px">
-          <span style="background:#e8f5e9;color:#2e7d32;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">💴 価格: ${c.price}</span>
-          <span style="background:#fff3e0;color:#e65100;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">💪 手間: ${c.work}</span>
-          <span style="background:#fce4ec;color:#880e4f;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">⚡ リスク: ${c.risk}</span>
+          <span style="background:#e8f5e9;color:#2e7d32;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">💴 ${t('価格')}: ${t(c.price)}</span>
+          <span style="background:#fff3e0;color:#e65100;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">💪 ${t('手間')}: ${t(c.work)}</span>
+          <span style="background:#fce4ec;color:#880e4f;border-radius:10px;padding:2px 8px;font-size:0.65rem;font-weight:700">⚡ ${t('リスク')}: ${t(c.risk)}</span>
         </div>
-        <div class="choice-hint">💭 ${c.desc}</div>
+        <div class="choice-hint">💭 ${t(c.desc)}</div>
       </button>
     `;
   }).join('');
@@ -1342,29 +1393,28 @@ function renderSalesPhase(main) {
 
   main.innerHTML = `
     <div class="phase-indicator">
-      <div class="phase-badge">PHASE ${state.phase + 1}/${PHASES.length}</div>
-      <div class="phase-name">販売先の選択</div>
+      <div class="phase-badge">${t('PHASE {a}/{b}', { a: state.phase + 1, b: PHASES.length })}</div>
+      <div class="phase-name">${t('販売先の選択')}</div>
       <div class="phase-dots">${dots}</div>
     </div>
     <div class="scene-card" style="border-left-color:var(--sun)">
       <span class="scene-emoji">💰</span>
-      <div class="scene-title">いよいよ販売！</div>
+      <div class="scene-title">${t('いよいよ販売！')}</div>
       <div class="scene-desc">
-        今シーズンの収穫物を売る時がきた。<br>
-        どこに売るかで収入と地域への影響が大きく変わる。
+        ${t('今シーズンの収穫物を売る時がきた。<br>どこに売るかで収入と地域への影響が大きく変わる。')}
       </div>
       <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
         <div style="background:#f0fff0;border:1px solid #4a7c3f;border-radius:10px;padding:6px 12px;text-align:center">
-          <div style="font-size:0.65rem;color:#666">🥔 収穫量スコア</div>
-          <div style="font-size:1.1rem;font-weight:900;color:${h>=60?'#2e7d32':'#c0392b'}">${h}点</div>
+          <div style="font-size:0.65rem;color:#666">${t('🥔 収穫量スコア')}</div>
+          <div style="font-size:1.1rem;font-weight:900;color:${h>=60?'#2e7d32':'#c0392b'}">${t('{n}点', { n: h })}</div>
         </div>
         <div style="background:#f0fff0;border:1px solid #4a7c3f;border-radius:10px;padding:6px 12px;text-align:center">
-          <div style="font-size:0.65rem;color:#666">⭐ 品質スコア</div>
-          <div style="font-size:1.1rem;font-weight:900;color:${q>=60?'#2e7d32':'#c0392b'}">${q}点</div>
+          <div style="font-size:0.65rem;color:#666">${t('⭐ 品質スコア')}</div>
+          <div style="font-size:1.1rem;font-weight:900;color:${q>=60?'#2e7d32':'#c0392b'}">${t('{n}点', { n: q })}</div>
         </div>
         <div style="background:#fff9e6;border:1px solid var(--potato);border-radius:10px;padding:6px 12px;text-align:center">
-          <div style="font-size:0.65rem;color:#666">🔓 解放済み</div>
-          <div style="font-size:1.1rem;font-weight:900;color:var(--sun)">${availableCount}/4</div>
+          <div style="font-size:0.65rem;color:#666">${t('🔓 解放済み')}</div>
+          <div style="font-size:1.1rem;font-weight:900;color:var(--sun)">${num(availableCount)}/${num(4)}</div>
         </div>
       </div>
     </div>
@@ -1403,7 +1453,7 @@ function renderSalesResult(main) {
     if (v === 0) return '';
     const label = SCORE_LABELS.find(s => s.key === k);
     const cls2 = v > 0 ? 'up' : 'down';
-    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${v}</div>`;
+    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${num(v)}</div>`;
   }).join('');
 
   let cardHtml = '';
@@ -1413,10 +1463,10 @@ function renderSalesResult(main) {
       <div class="knowledge-card">
         <div class="knowledge-header">
           <span class="card-icon">${card.icon}</span>
-          <span class="card-new-badge">📚 知識カード獲得！</span>
+          <span class="card-new-badge">${t('📚 知識カード獲得！')}</span>
         </div>
-        <div class="knowledge-title">${card.title}</div>
-        <div class="knowledge-text">${card.text}</div>
+        <div class="knowledge-title">${t(card.title)}</div>
+        <div class="knowledge-text">${t(card.text)}</div>
       </div>
     `;
   }
@@ -1424,15 +1474,15 @@ function renderSalesResult(main) {
   main.innerHTML = `
     <div style="text-align:center;padding:8px 0 14px">
       <div style="font-size:2.5rem">${result.salesIcon}</div>
-      <div style="font-size:0.75rem;color:#888;margin-top:4px">販売先: <strong>${result.salesChannel}</strong></div>
+      <div style="font-size:0.75rem;color:#888;margin-top:4px">${t('販売先')}: <strong>${t(result.salesChannel)}</strong></div>
     </div>
     <div class="result-card ${cls}">
-      <div class="result-title">${icon} ${result.title}</div>
-      <div class="result-desc">${result.desc}</div>
+      <div class="result-title">${icon} ${t(result.title)}</div>
+      <div class="result-desc">${t(result.desc)}</div>
       <div class="score-changes">${scoreChanges}</div>
     </div>
     ${cardHtml}
-    <button class="next-btn" onclick="goToFinal()">🏁 最終結果を見る</button>
+    <button class="next-btn" onclick="goToFinal()">${t('🏁 最終結果を見る')}</button>
   `;
 }
 
@@ -1455,15 +1505,17 @@ function render() {
   const albumBtn = document.getElementById('album-btn');
   const scorebar = document.getElementById('score-bar');
 
+  renderLanguage();
+
   // Score bar
   if (state.screen !== 'setup') {
     scorebar.innerHTML = SCORE_LABELS.map(s => {
       const v = state.scores[s.key];
       const cls = v >= 50 ? 'positive' : 'negative';
-      return `<div class="score-item ${cls}"><span style="line-height:1">${s.emoji}</span><span class="val">${v}</span><span style="font-size:0.55rem;opacity:0.85;line-height:1">${s.short}</span></div>`;
+      return `<div class="score-item ${cls}"><span style="line-height:1">${s.emoji}</span><span class="val">${num(v)}</span><span style="font-size:0.55rem;opacity:0.85;line-height:1">${t(s.short)}</span></div>`;
     }).join('');
     albumBtn.style.display = 'flex';
-    document.getElementById('card-badge').textContent = state.cards.length;
+    document.getElementById('card-badge').textContent = num(state.cards.length);
   } else {
     scorebar.innerHTML = '';
     albumBtn.style.display = 'none';
@@ -1486,46 +1538,46 @@ function render() {
 function renderSetup(main) {
   main.innerHTML = `
     <div class="setup-screen">
-      <div class="setup-title">じゃがいも<br>マスター</div>
-      <div class="setup-subtitle">〜ネパール農家への道〜</div>
+      <div class="setup-title">${t('ジャガイモ<br>栽培ゲーム')}</div>
+      <div class="setup-subtitle">${t('〜ネパール農家への道〜')}</div>
       <div class="setup-potato">🥔</div>
       <div class="setup-section">
-        <h3>🌤️ 作型を選んでください</h3>
+        <h3>${t('🌤️ 作型を選んでください')}</h3>
         <div class="option-grid">
           <button class="option-btn ${state.season==='summer'?'selected':''}" onclick="selectSeason('summer')">
             <span class="opt-emoji">☀️</span>
-            <div class="opt-name">夏作</div>
-            <div class="opt-desc">丘陵・山岳地帯<br>1〜3月植付</div>
+            <div class="opt-name">${t('夏作')}</div>
+            <div class="opt-desc">${t('丘陵・山岳地帯<br>1〜3月植付')}</div>
           </button>
           <button class="option-btn ${state.season==='winter'?'selected':''}" onclick="selectSeason('winter')">
             <span class="opt-emoji">❄️</span>
-            <div class="opt-name">冬作</div>
-            <div class="opt-desc">テライ・丘陵低地<br>10〜11月植付</div>
+            <div class="opt-name">${t('冬作')}</div>
+            <div class="opt-desc">${t('テライ・丘陵低地<br>10〜11月植付')}</div>
           </button>
         </div>
       </div>
       <div class="setup-section">
-        <h3>🗺️ 栽培地帯を選んでください</h3>
+        <h3>${t('🗺️ 栽培地帯を選んでください')}</h3>
         <div class="option-grid">
           <button class="option-btn ${state.region==='terai'?'selected':''}" onclick="selectRegion('terai')">
             <span class="opt-emoji">🌾</span>
-            <div class="opt-name">テライ平野</div>
-            <div class="opt-desc">〜300m<br>高温多湿</div>
+            <div class="opt-name">${t('テライ平野')}</div>
+            <div class="opt-desc">${t('〜300m<br>高温多湿')}</div>
           </button>
           <button class="option-btn ${state.region==='hill'?'selected':''}" onclick="selectRegion('hill')">
             <span class="opt-emoji">⛰️</span>
-            <div class="opt-name">丘陵地帯</div>
-            <div class="opt-desc">300〜2000m<br>温暖・段々畑</div>
+            <div class="opt-name">${t('丘陵地帯')}</div>
+            <div class="opt-desc">${t('300〜2000m<br>温暖・段々畑')}</div>
           </button>
           <button class="option-btn ${state.region==='mountain'?'selected':''}" onclick="selectRegion('mountain')">
             <span class="opt-emoji">🏔️</span>
-            <div class="opt-name">山岳地帯</div>
-            <div class="opt-desc">2000m〜<br>冷涼・霜リスク</div>
+            <div class="opt-name">${t('山岳地帯')}</div>
+            <div class="opt-desc">${t('2000m〜<br>冷涼・霜リスク')}</div>
           </button>
         </div>
       </div>
       <button class="start-btn" onclick="startGame()" ${!state.season||!state.region?'disabled style="opacity:0.5"':''}>
-        🌱 栽培スタート！
+        ${t('🌱 栽培スタート！')}
       </button>
     </div>
   `;
@@ -1538,26 +1590,26 @@ function renderPhase(main) {
     return `<div class="phase-dot ${cls}"></div>`;
   }).join('');
 
-  const seasonLabel = state.season === 'summer' ? '☀️ 夏作' : '❄️ 冬作';
+  const seasonLabel = state.season === 'summer' ? '☀️ ' + t('夏作') : '❄️ ' + t('冬作');
 
   main.innerHTML = `
     <div class="phase-indicator">
-      <div class="phase-badge">PHASE ${state.phase + 1}/${PHASES.length}</div>
-      <div class="phase-name">${phase.name}</div>
+      <div class="phase-badge">${t('PHASE {a}/{b}', { a: state.phase + 1, b: PHASES.length })}</div>
+      <div class="phase-name">${t(phase.name)}</div>
       <div class="phase-dots">${dots}</div>
     </div>
     <div class="scene-card">
-      <span class="season-badge">${seasonLabel} / ${state.region === 'terai' ? 'テライ平野' : state.region === 'hill' ? '丘陵地帯' : '山岳地帯'}</span>
+      <span class="season-badge">${seasonLabel} / ${state.region === 'terai' ? t('テライ平野') : state.region === 'hill' ? t('丘陵地帯') : t('山岳地帯')}</span>
       <span class="scene-emoji">${phase.emoji}</span>
-      <div class="scene-title">${phase.name}</div>
-      <div class="scene-desc">${phase.desc}</div>
+      <div class="scene-title">${t(phase.name)}</div>
+      <div class="scene-desc">${t(phase.desc)}</div>
     </div>
     <div class="choices">
       ${phase.choices.map((c, i) => `
         <button class="choice-btn" onclick="makeChoice(${i})">
-          <div class="choice-label">選択肢 ${String.fromCharCode(65+i)}</div>
-          <div class="choice-text">${c.text}</div>
-          <div class="choice-hint">💭 ${c.hint}</div>
+          <div class="choice-label">${t('選択肢')} ${String.fromCharCode(65+i)}</div>
+          <div class="choice-text">${t(c.text)}</div>
+          <div class="choice-hint">💭 ${t(c.hint)}</div>
         </button>
       `).join('')}
     </div>
@@ -1573,7 +1625,7 @@ function renderResult(main) {
     if (v === 0) return '';
     const label = SCORE_LABELS.find(s => s.key === k);
     const cls2 = v > 0 ? 'up' : 'down';
-    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${v}</div>`;
+    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${num(v)}</div>`;
   }).join('');
 
   let cardHtml = '';
@@ -1583,22 +1635,22 @@ function renderResult(main) {
       <div class="knowledge-card">
         <div class="knowledge-header">
           <span class="card-icon">${card.icon}</span>
-          <span class="card-new-badge">📚 知識カード獲得！</span>
+          <span class="card-new-badge">${t('📚 知識カード獲得！')}</span>
         </div>
-        <div class="knowledge-title">${card.title}</div>
-        <div class="knowledge-text">${card.text}</div>
+        <div class="knowledge-title">${t(card.title)}</div>
+        <div class="knowledge-text">${t(card.text)}</div>
       </div>
     `;
   }
 
   const isLast = state.phase >= PHASES.length - 2; // 最後から2番目=貯蔵フェーズ
   const isSalesNext = state.phase === PHASES.length - 2;
-  const nextLabel = isSalesNext ? '💰 販売フェーズへ' : isLast ? '🏁 最終結果を見る' : '▶ 次のフェーズへ';
+  const nextLabel = isSalesNext ? t('💰 販売フェーズへ') : isLast ? t('🏁 最終結果を見る') : t('▶ 次のフェーズへ');
 
   main.innerHTML = `
     <div class="result-card ${cls}">
-      <div class="result-title">${icon} ${result.title}</div>
-      <div class="result-desc">${result.desc}</div>
+      <div class="result-title">${icon} ${t(result.title)}</div>
+      <div class="result-desc">${t(result.desc)}</div>
       <div class="score-changes">${scoreChanges}</div>
     </div>
     ${cardHtml}
@@ -1612,16 +1664,16 @@ function renderTrap(main) {
     <div class="trap-card">
       <div class="trap-header">
         <span class="trap-icon">${trap.icon}</span>
-        <span class="trap-label">⚠️ 突発イベント</span>
+        <span class="trap-label">${t('⚠️ 突発イベント')}</span>
       </div>
-      <div class="trap-title">${trap.title}</div>
-      <div class="trap-desc">${trap.desc}</div>
+      <div class="trap-title">${t(trap.title)}</div>
+      <div class="trap-desc">${t(trap.desc)}</div>
     </div>
     <div class="choices">
       ${trap.choices.map((c, i) => `
         <button class="choice-btn" onclick="makeTrapChoice(${i})">
-          <div class="choice-label">対応 ${String.fromCharCode(65+i)}</div>
-          <div class="choice-text">${c.text}</div>
+          <div class="choice-label">${t('対応')} ${String.fromCharCode(65+i)}</div>
+          <div class="choice-text">${t(c.text)}</div>
         </button>
       `).join('')}
     </div>
@@ -1637,7 +1689,7 @@ function renderTrapResult(main) {
     if (v === 0) return '';
     const label = SCORE_LABELS.find(s => s.key === k);
     const cls2 = v > 0 ? 'up' : 'down';
-    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${v}</div>`;
+    return `<div class="score-change ${cls2}">${label.emoji}${v > 0 ? '+' : ''}${num(v)}</div>`;
   }).join('');
 
   let cardHtml = '';
@@ -1647,22 +1699,22 @@ function renderTrapResult(main) {
       <div class="knowledge-card">
         <div class="knowledge-header">
           <span class="card-icon">${card.icon}</span>
-          <span class="card-new-badge">📚 知識カード獲得！</span>
+          <span class="card-new-badge">${t('📚 知識カード獲得！')}</span>
         </div>
-        <div class="knowledge-title">${card.title}</div>
-        <div class="knowledge-text">${card.text}</div>
+        <div class="knowledge-title">${t(card.title)}</div>
+        <div class="knowledge-text">${t(card.text)}</div>
       </div>
     `;
   }
 
   main.innerHTML = `
     <div class="result-card ${cls}">
-      <div class="result-title">${icon} ${result.title}</div>
-      <div class="result-desc">${result.desc}</div>
+      <div class="result-title">${icon} ${t(result.title)}</div>
+      <div class="result-desc">${t(result.desc)}</div>
       <div class="score-changes">${scoreChanges}</div>
     </div>
     ${cardHtml}
-    <button class="next-btn" onclick="continueAfterTrap()">▶ 次へ</button>
+    <button class="next-btn" onclick="continueAfterTrap()">${t('▶ 次へ')}</button>
   `;
 }
 
@@ -1670,24 +1722,24 @@ function renderGameOver(main) {
   main.innerHTML = `
     <div class="gameover-screen">
       <div class="dead-plant">🥀</div>
-      <div class="gameover-title">作物が全滅…</div>
+      <div class="gameover-title">${t('作物が全滅…')}</div>
       <div class="gameover-desc">
-        ${state.gameOverReason}<br><br>
-        でも大丈夫。失敗から学ぶのが農業の極意。<br>
-        もう一度挑戦しましょう！
+        ${t(state.gameOverReason)}<br><br>
+        ${t('でも大丈夫。失敗から学ぶのが農業の極意。')}<br>
+        ${t('もう一度挑戦しましょう！')}
       </div>
       ${state.cards.length > 0 ? `
         <div class="cards-collected">
-          <h3>📚 今回集めた知識カード（${state.cards.length}枚）</h3>
+          <h3>${t('📚 今回集めた知識カード（{n}枚）', { n: state.cards.length })}</h3>
           <div class="card-chips">
             ${state.cards.map(id => {
               const c = KNOWLEDGE_CARDS[id];
-              return c ? `<div class="card-chip">${c.icon} ${c.title}</div>` : '';
+              return c ? `<div class="card-chip">${c.icon} ${t(c.title)}</div>` : '';
             }).join('')}
           </div>
         </div>
       ` : ''}
-      <button class="retry-btn" onclick="restartGame()">🔄 もう一度挑戦する</button>
+      <button class="retry-btn" onclick="restartGame()">${t('🔄 もう一度挑戦する')}</button>
     </div>
   `;
 }
@@ -1708,35 +1760,35 @@ function renderFinal(main) {
     const pct = Math.max(0, Math.min(100, v));
     return `
       <div class="final-score-row">
-        <span>${s.label}</span>
+        <span>${t(s.label)}</span>
         <div class="score-bar-visual"><div class="score-bar-fill" style="width:${pct}%"></div></div>
-        <span style="font-weight:900;min-width:36px;text-align:right">${v}</span>
+        <span style="font-weight:900;min-width:36px;text-align:right">${num(v)}</span>
       </div>
     `;
   }).join('');
 
   main.innerHTML = `
     <div class="final-screen">
-      <div class="final-title">🌾 収穫完了！</div>
+      <div class="final-title">${t('🌾 収穫完了！')}</div>
       <div class="rank-display">${rankEmoji}</div>
-      <div class="rank-name">${rank}</div>
-      <p style="font-size:0.78rem;color:#666;margin-bottom:14px;line-height:1.6">${rankDesc}</p>
+      <div class="rank-name">${t(rank)}</div>
+      <p style="font-size:0.78rem;color:#666;margin-bottom:14px;line-height:1.6">${t(rankDesc)}</p>
       <div class="final-scores">
-        <div style="font-size:0.8rem;font-weight:900;color:#888;margin-bottom:8px">スコア詳細（平均: ${avg}点）</div>
+        <div style="font-size:0.8rem;font-weight:900;color:#888;margin-bottom:8px">${t('スコア詳細（平均: {n}点）', { n: avg })}</div>
         ${scoreRows}
       </div>
       ${state.cards.length > 0 ? `
         <div class="cards-collected">
-          <h3>📚 集めた知識カード（${state.cards.length}枚）</h3>
+          <h3>${t('📚 集めた知識カード（{n}枚）', { n: state.cards.length })}</h3>
           <div class="card-chips">
             ${state.cards.map(id => {
               const c = KNOWLEDGE_CARDS[id];
-              return c ? `<div class="card-chip">${c.icon} ${c.title}</div>` : '';
+              return c ? `<div class="card-chip">${c.icon} ${t(c.title)}</div>` : '';
             }).join('')}
           </div>
         </div>
       ` : ''}
-      <button class="retry-btn" onclick="restartGame()">🔄 もう一度挑戦する</button>
+      <button class="retry-btn" onclick="restartGame()">${t('🔄 もう一度挑戦する')}</button>
     </div>
   `;
 
@@ -1869,7 +1921,7 @@ function showAlbum() {
   overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
 
   const cardsHtml = state.cards.length === 0
-    ? '<div class="album-empty">まだカードがありません。<br>良い選択をすると獲得できます！</div>'
+    ? `<div class="album-empty">${t('まだカードがありません。<br>良い選択をすると獲得できます！')}</div>`
     : state.cards.map(id => {
         const c = KNOWLEDGE_CARDS[id];
         if (!c) return '';
@@ -1877,8 +1929,8 @@ function showAlbum() {
           <div class="album-card">
             <span class="card-icon">${c.icon}</span>
             <div class="card-body">
-              <div class="card-title">${c.title}</div>
-              <div class="card-text">${c.text}</div>
+              <div class="card-title">${t(c.title)}</div>
+              <div class="card-text">${t(c.text)}</div>
             </div>
           </div>
         `;
@@ -1886,14 +1938,956 @@ function showAlbum() {
 
   overlay.innerHTML = `
     <div class="album-panel">
-      <div class="album-title">📚 知識カード図鑑（${state.cards.length}枚）</div>
+      <div class="album-title">${t('📚 知識カード図鑑（{n}枚）', { n: state.cards.length })}</div>
       ${cardsHtml}
-      <button class="close-btn" onclick="document.querySelector('.album-overlay').remove()">閉じる</button>
+      <button class="close-btn" onclick="document.querySelector('.album-overlay').remove()">${t('閉じる')}</button>
     </div>
   `;
 
   document.body.appendChild(overlay);
 }
+
+// ===== TRANSLATIONS =====
+// [Japanese (key), English, Nepali]
+const TRANSLATIONS = [
+  ["クフリ・ジョティとは",
+    "About Kufri Jyoti",
+    "कुफ्री ज्योतिको परिचय"],
+  ["ネパール最普及品種。収量安定だが疫病に弱い。モンスーン前の早めの防除が鍵。山岳地帯の夏作にも適応。",
+    "The most widely grown variety in Nepal. Yields are stable, but it is vulnerable to late blight. Early control before the monsoon is key. Also suited to summer crops in the mountains.",
+    "नेपालमा सबैभन्दा धेरै लगाइने जात। उत्पादन स्थिर हुन्छ तर डढुवा रोग सजिलै लाग्छ। मनसुन अगावै रोकथाम गर्नु मुख्य कुरा हो। हिमाली क्षेत्रको ग्रीष्मकालीन खेतीका लागि पनि उपयुक्त छ।"],
+  ["疫病（レイトブライト）",
+    "Late blight",
+    "डढुवा रोग (लेट ब्लाइट)"],
+  ["低温多湿で爆発的に発生。葉の水浸状斑点が最初のサイン。マンコゼブ散布は発症前の予防散布が効果的。発症後は手遅れになりやすい。",
+    "Spreads explosively in cool, wet weather. Water-soaked spots on the leaves are the first sign. Mancozeb works best as a preventive spray before symptoms appear. After that, it is often too late.",
+    "चिसो र ओसिलो मौसममा तीव्र गतिले फैलिन्छ। पातमा देखिने पानीले भिजेजस्ता दाग पहिलो लक्षण हुन्। लक्षण देखिनुअघि नै म्यान्कोजेब छर्नु प्रभावकारी हुन्छ। रोग लागिसकेपछि प्रायः ढिलो भइसक्छ।"],
+  ["自家採種のウイルスリスク",
+    "Virus risk in farm-saved seed",
+    "आफ्नै बीउमा भाइरसको जोखिम"],
+  ["毎年同じ種芋を使うと、ウイルスが蓄積して収量が落ちる。3〜4年ごとに認定種芋（NARC）を使うことで収量が最大30%改善する。",
+    "Reusing the same seed potatoes every year lets viruses build up and reduces yield. Using certified seed (NARC) every 3–4 years can improve yield by up to 30%.",
+    "हरेक वर्ष एउटै बीउ आलु प्रयोग गर्दा भाइरस जम्मा भई उत्पादन घट्छ। 3–4 वर्षमा एकपटक प्रमाणित बीउ (NARC) प्रयोग गर्दा उत्पादन 30% सम्म बढ्न सक्छ।"],
+  ["モンスーン対策の排水",
+    "Drainage for the monsoon",
+    "मनसुनका लागि पानीको निकास"],
+  ["テライ平野では6〜9月に豪雨が集中。畝を高くし、排水溝を事前に掘ることが被害ゼロへの鍵。段々畑では土壌侵食も要注意。",
+    "In the Terai plains, heavy rain is concentrated from June to September. Raising ridges and digging drains in advance are the keys to avoiding damage. Watch for soil erosion on terraces too.",
+    "तराईमा जुनदेखि सेप्टेम्बरसम्म धेरै वर्षा हुन्छ। ड्याङ अग्लो बनाउनु र पहिल्यै निकास कुलो खन्नु क्षतिबाट बच्ने उपाय हो। गह्राहरूमा भूक्षयप्रति पनि सावधान रहनुहोस्।"],
+  ["施肥バランスの重要性",
+    "Why balanced fertilizer matters",
+    "सन्तुलित मलखादको महत्त्व"],
+  ["窒素過多は茎葉ばかり茂り、イモが小さくなる（過繁茂）。カリが不足するとイモの品質が低下。牛糞堆肥+少量の化学肥料が理想的。",
+    "Too much nitrogen makes stems and leaves overgrow while tubers stay small. Too little potassium lowers tuber quality. Cattle manure plus a little chemical fertilizer is ideal.",
+    "नाइट्रोजन धेरै भए डाँठ र पात मात्र बढ्छन् र आलु साना हुन्छन्। पोटास कम भए आलुको गुणस्तर घट्छ। गोबर मल र थोरै रासायनिक मलको मिश्रण उत्तम हुन्छ।"],
+  ["培土（土寄せ）のタイミング",
+    "When to hill up",
+    "माटो चढाउने समय"],
+  ["株高20〜25cmで第1回培土。遅れると緑化イモが発生し、ソラニンが生成されて食べられなくなる。培土は1〜2回が基本。",
+    "Do the first hilling when plants are 20–25 cm tall. If you are late, tubers turn green and form solanine, making them inedible. One or two hillings is standard.",
+    "बिरुवा 20–25 से.मी. अग्लो हुँदा पहिलो पटक माटो चढाउनुहोस्। ढिलो भए आलु हरियो भई सोलानिन बन्छ र खान नमिल्ने हुन्छ। सामान्यतया 1–2 पटक माटो चढाइन्छ।"],
+  ["そうか病と土壌pH",
+    "Common scab and soil pH",
+    "दादे रोग र माटोको pH"],
+  ["そうか病はアルカリ土壌（pH7以上）で多発。テライ石灰質土壌では特に注意。硫黄資材でpH5.2〜5.5に調整すると発生を抑えられる。",
+    "Common scab is frequent in alkaline soil (pH 7 or higher). Take special care on calcareous Terai soils. Adjusting to pH 5.2–5.5 with sulfur helps suppress it.",
+    "दादे रोग क्षारीय माटो (pH 7 वा बढी) मा धेरै लाग्छ। तराईको चुनयुक्त माटोमा विशेष ध्यान दिनुहोस्। गन्धक प्रयोग गरी pH 5.2–5.5 मा मिलाए रोग कम गर्न सकिन्छ।"],
+  ["キュアリング処理",
+    "Curing",
+    "क्युरिङ (घाउ निको पार्ने प्रक्रिया)"],
+  ["収穫後すぐに出荷せず、15〜20℃・高湿度で1〜2週間置くことで傷が癒え、貯蔵中の腐敗が大幅に減少する。山岳地帯の土中貯蔵でも有効。",
+    "Instead of shipping right after harvest, keep tubers at 15–20 °C and high humidity for 1–2 weeks. Wounds heal and storage rot drops sharply. It also helps with in-ground storage in the mountains.",
+    "खन्नासाथ नबेची 15–20 °C र उच्च आर्द्रतामा 1–2 हप्ता राख्दा घाउ निको हुन्छन् र भण्डारणमा कुहिने समस्या धेरै घट्छ। हिमाली क्षेत्रमा माटोमुनि भण्डारण गर्दा पनि उपयोगी छ।"],
+  ["市場価格と出荷タイミング",
+    "Market prices and timing",
+    "बजार मूल्य र बेच्ने समय"],
+  ["収穫直後は価格が低い。1〜2ヶ月貯蔵して端境期に出荷すると2〜3倍の価格になることも。ただし貯蔵中の腐敗リスク管理が必要。",
+    "Prices are low right after harvest. Storing for 1–2 months and selling off-season can bring 2–3 times the price. However, you must manage the risk of rot in storage.",
+    "आलु खन्ने बित्तिकै मूल्य कम हुन्छ। 1–2 महिना भण्डारण गरी बेमौसममा बेच्दा 2–3 गुणा मूल्य पाउन सकिन्छ। तर भण्डारणमा कुहिने जोखिम व्यवस्थापन गर्नुपर्छ।"],
+  ["霜害と植付タイミング",
+    "Frost damage and planting time",
+    "तुसारो र रोप्ने समय"],
+  ["山岳地帯（2000m以上）では4月でも遅霜が発生する。出芽後の霜は致命的。わら被覆や植付時期を2週間遅らせるだけで被害を防げる。",
+    "In the mountains (above 2000 m), late frost can occur even in April. Frost after emergence is fatal. Straw mulch or planting just two weeks later can prevent damage.",
+    "हिमाली क्षेत्र (2000 मि. भन्दा माथि) मा अप्रिलमा पनि तुसारो पर्न सक्छ। टुसाएपछिको तुसारो घातक हुन्छ। पराल/छ्वालीले छोप्ने वा 2 हप्ता ढिलो रोप्ने गर्दा क्षति रोक्न सकिन्छ।"],
+  ["農薬散布の安全管理",
+    "Safe pesticide use",
+    "विषादीको सुरक्षित प्रयोग"],
+  ["マスクなし・素手での農薬散布は農薬中毒の原因。ネパールでは年間数千件の農薬中毒が報告。マスク・手袋・長袖着用が必須。収穫前日数の遵守も重要。",
+    "Spraying without a mask or with bare hands causes pesticide poisoning. Thousands of cases are reported in Nepal every year. A mask, gloves and long sleeves are essential. Observe the pre-harvest interval too.",
+    "मास्क नलगाई वा खाली हातले विषादी छर्दा विषाक्तता हुन्छ। नेपालमा वर्षेनि हजारौँ घटना रिपोर्ट हुन्छन्। मास्क, पन्जा र लामो बाहुला अनिवार्य छन्। विषादी छरेपछि बाली लिन पर्खनुपर्ने दिन पनि पालना गर्नुहोस्।"],
+  ["輪作の重要性",
+    "Why crop rotation matters",
+    "बाली चक्रको महत्त्व"],
+  ["ジャガイモの連作は土壌病害（そうか病・黒あし病）を増加させる。トウモロコシや豆類と3〜4年ローテーションすることで土壌が回復する。",
+    "Growing potatoes continuously increases soil-borne diseases (common scab, blackleg). Rotating with maize or legumes over 3–4 years lets the soil recover.",
+    "लगातार आलु लगाउँदा माटोजन्य रोग (दादे, कालो फेद) बढ्छन्। मकै वा कोसेबालीसँग 3–4 वर्षको बाली चक्र अपनाउँदा माटो सुधार हुन्छ।"],
+  ["仲買人との付き合い方",
+    "Dealing with brokers",
+    "बिचौलियासँगको व्यवहार"],
+  ["仲買人は手軽に売れるが、価格交渉力が低くなりがち。品質の良し悪しで価格差がつきにくい。複数の仲買人と関係を持つことで価格競争を生み出せる。",
+    "Selling to brokers is easy, but your bargaining power tends to be low and good quality rarely earns a premium. Building ties with several brokers creates price competition.",
+    "बिचौलियालाई बेच्न सजिलो हुन्छ तर मोलतोल गर्ने शक्ति कम हुन्छ। राम्रो गुणस्तरको पनि बढी मूल्य पाउन गाह्रो हुन्छ। धेरै बिचौलियासँग सम्बन्ध राख्दा मूल्यमा प्रतिस्पर्धा हुन्छ।"],
+  ["直売・個人販売のメリット",
+    "Benefits of direct sales",
+    "प्रत्यक्ष बिक्रीका फाइदा"],
+  ["市場や仲買人より20〜50%高く売れる可能性がある。ただし輸送・販売の手間と時間が必要。品質と信頼関係の構築が成功の鍵。常連客を持つことが収入安定につながる。",
+    "You may earn 20–50% more than through markets or brokers, but transport and selling take time and effort. Quality and trust are the keys to success. Regular customers mean a stable income.",
+    "बजार वा बिचौलियाभन्दा 20–50% बढी मूल्य पाउन सकिन्छ। तर ढुवानी र बिक्रीमा समय र मेहनत लाग्छ। गुणस्तर र विश्वास सफलताको आधार हुन्। नियमित ग्राहकले आम्दानी स्थिर बनाउँछन्।"],
+  ["農協・契約栽培の強み",
+    "Strengths of co-ops and contract farming",
+    "सहकारी र करार खेतीको बल"],
+  ["契約栽培は価格と販売量が事前に決まり経営が安定する。農協を通じると農薬・肥料を安く共同購入でき、技術指導も受けられる。ネパールでは農協加入農家の収入が平均15%高い。",
+    "Contract farming fixes price and volume in advance, stabilizing your business. Co-ops offer cheaper joint purchasing of pesticides and fertilizer, plus technical advice. In Nepal, co-op members earn 15% more on average.",
+    "करार खेतीमा मूल्य र परिमाण पहिल्यै तय हुने भएकाले व्यवसाय स्थिर हुन्छ। सहकारीमार्फत विषादी र मल सामूहिक रूपमा सस्तोमा किन्न र प्राविधिक सल्लाह पाउन सकिन्छ। नेपालमा सहकारीका सदस्य किसानको आम्दानी औसत 15% बढी छ।"],
+  ["品種・種芋選択",
+    "Variety and seed selection",
+    "जात र बीउ आलु छनोट"],
+  ["今シーズンの品種と種芋の調達先を選びましょう。",
+    "Choose this season's variety and where to get your seed potatoes.",
+    "यस सिजनको जात र बीउ आलु कहाँबाट ल्याउने छान्नुहोस्।"],
+  ["NARCの認定種芋（クフリ・ジョティ）を購入",
+    "Buy NARC-certified seed (Kufri Jyoti)",
+    "NARC को प्रमाणित बीउ (कुफ्री ज्योति) किन्ने"],
+  ["少し高いが品質は確実",
+    "A bit expensive, but reliable quality",
+    "अलि महँगो तर गुणस्तर भरपर्दो"],
+  ["良質な種芋を確保！",
+    "Quality seed secured!",
+    "राम्रो बीउ आलु पाइयो!"],
+  ["認定種芋はウイルスフリーで発芽率が高い。コストは上がるが収量への期待大。",
+    "Certified seed is virus-free with high germination. It costs more, but yield prospects are excellent.",
+    "प्रमाणित बीउ भाइरसमुक्त हुन्छ र राम्रोसँग उम्रन्छ। लागत बढ्छ तर राम्रो उत्पादनको आशा छ।"],
+  ["昨年の自家採種を使う",
+    "Use seed saved from last year",
+    "गत वर्षको आफ्नै बीउ प्रयोग गर्ने"],
+  ["コスト節約になるが…",
+    "Saves money, but...",
+    "खर्च त जोगिन्छ, तर…"],
+  ["コスト節約になったが…",
+    "Money saved, but...",
+    "खर्च त जोगियो, तर…"],
+  ["自家採種はコスト節約になるが、ウイルスの蓄積が心配。今年は大丈夫かも。",
+    "Saved seed cuts costs, but virus build-up is a worry. It may be fine this year.",
+    "आफ्नै बीउले खर्च जोगाउँछ तर भाइरस जम्मा हुने चिन्ता छ। यस वर्ष ठीकै होला कि।"],
+  ["市場の安い種芋を購入",
+    "Buy cheap seed at the market",
+    "बजारबाट सस्तो बीउ किन्ने"],
+  ["最安値だが品質は？",
+    "Cheapest price, but the quality?",
+    "सबैभन्दा सस्तो, तर गुणस्तर?"],
+  ["品質が心配…",
+    "Quality is a worry...",
+    "गुणस्तरको चिन्ता…"],
+  ["安いのには理由がある。品種が混ざっており、病気の種芋も混入している可能性が。",
+    "There is a reason it is cheap. Varieties are mixed and diseased seed may be included.",
+    "सस्तो हुनुको कारण छ। जातहरू मिसिएका छन् र रोगी बीउ पनि परेको हुन सक्छ।"],
+  ["芋切・催芽処理",
+    "Cutting and sprouting seed",
+    "बीउ काट्ने र टुसाउने"],
+  ["種芋を適切なサイズに切り、芽出しをします。",
+    "Cut seed potatoes to the right size and sprout them.",
+    "बीउ आलु उचित आकारमा काटेर टुसाउनुहोस्।"],
+  ["1片40〜60gに切り、草木灰で切り口処理",
+    "Cut into 40–60 g pieces and treat cuts with wood ash",
+    "40–60 ग्रामका टुक्रा काटी खरानी लगाउने"],
+  ["伝統的な方法",
+    "The traditional method",
+    "परम्परागत तरिका"],
+  ["完璧な種芋の準備！",
+    "Perfect seed preparation!",
+    "बीउको उत्कृष्ट तयारी!"],
+  ["適正サイズ+草木灰処理で切り口の病原菌をブロック。発芽が揃い生育初期が安定。",
+    "The right size plus ash blocks pathogens at the cut surface. Even sprouting gives a stable early growth.",
+    "सही आकार र खरानीले काटेको भागमा रोगका जीवाणु रोक्छ। एकनास उम्रिएर सुरुको वृद्धि स्थिर भयो।"],
+  ["大きいまま植える（切らない）",
+    "Plant whole, without cutting",
+    "नकाटी सिङ्गै रोप्ने"],
+  ["手間が省けるが種芋のコストが高い",
+    "Less work, but higher seed cost",
+    "काम कम, तर बीउको खर्च बढी"],
+  ["発芽は揃ったが…",
+    "Even sprouting, but...",
+    "एकनास उम्रियो, तर…"],
+  ["切らない場合は腐敗リスクは低いが、種芋の使用量が増えコストが上がる。",
+    "Uncut seed has a low risk of rot, but you use more seed and costs go up.",
+    "नकाटिएको बीउ कुहिने जोखिम कम हुन्छ, तर बीउ धेरै लागेर खर्च बढ्छ।"],
+  ["大きく切りすぎて処理なしで植える",
+    "Cut too large and plant untreated",
+    "धेरै ठूला टुक्रा काटी उपचार नगरी रोप्ने"],
+  ["急いで作業した",
+    "Did it in a rush",
+    "हतारमा काम गरियो"],
+  ["切り口から腐敗が！",
+    "Rot from the cut surfaces!",
+    "काटेको भागबाट कुहियो!"],
+  ["大きすぎる切り片は腐敗しやすく、処理なしでは土中の菌が侵入。欠株が増加。",
+    "Oversized pieces rot easily and, untreated, let soil microbes in. More plants are missing.",
+    "धेरै ठूला टुक्रा सजिलै कुहिन्छन् र उपचार नगर्दा माटोका जीवाणु पस्छन्। धेरै ठाउँमा बिरुवा उम्रिएनन्।"],
+  ["土壌・畑の準備",
+    "Soil and field preparation",
+    "माटो र खेतको तयारी"],
+  ["作付け前の土壌チェックと耕起を行います。",
+    "Check the soil and till before planting.",
+    "रोप्नुअघि माटो जाँच र खनजोत गर्नुहोस्।"],
+  ["土壌検査を実施してから作業",
+    "Test the soil before starting work",
+    "माटो परीक्षण गरेर काम सुरु गर्ने"],
+  ["手間と費用がかかるが効果的",
+    "Takes effort and money, but effective",
+    "मेहनत र खर्च लाग्छ तर प्रभावकारी"],
+  ["土壌の状態を把握！",
+    "You know your soil!",
+    "माटोको अवस्था थाहा भयो!"],
+  ["pH・栄養状態を把握して施肥設計ができる。連作障害も事前に確認できた。",
+    "Knowing pH and nutrients lets you plan fertilizer. You also checked for continuous-cropping problems in advance.",
+    "pH र पोषक तत्त्व थाहा पाएर मलको योजना बनाउन सकियो। लगातार खेतीका समस्या पनि पहिल्यै जाँचियो।"],
+  ["昨年と同じ場所に連作",
+    "Plant in the same field as last year",
+    "गत वर्षकै खेतमा फेरि लगाउने"],
+  ["楽だが危険かも…",
+    "Easy, but maybe risky...",
+    "सजिलो, तर जोखिम हुन सक्छ…"],
+  ["連作障害の危機！",
+    "Continuous-cropping danger!",
+    "लगातार खेतीको सङ्कट!"],
+  ["同じ畑での連作は土壌病害のリスクが高い。そうか病・黒あし病の発生率が上昇。",
+    "Repeating potatoes in the same field carries a high risk of soil-borne disease. Scab and blackleg increase.",
+    "एउटै खेतमा लगातार आलु लगाउँदा माटोजन्य रोगको जोखिम बढी हुन्छ। दादे र कालो फेद रोग बढे।"],
+  ["深耕して別の畑で栽培",
+    "Till deeply and use a different field",
+    "गहिरो जोतेर अर्को खेतमा लगाउने"],
+  ["輪作の基本",
+    "The basis of crop rotation",
+    "बाली चक्रको आधार"],
+  ["健全な輪作！",
+    "Healthy rotation!",
+    "राम्रो बाली चक्र!"],
+  ["前作トウモロコシの後作ジャガイモ。土壌病害のリスクが低く、生育初期から順調。",
+    "Potatoes follow maize. Soil-disease risk is low and early growth is strong.",
+    "मकैपछि आलु लगाइयो। माटोजन्य रोगको जोखिम कम छ र सुरुदेखि नै राम्रो बढ्यो।"],
+  ["施肥設計",
+    "Fertilizer plan",
+    "मलखाद योजना"],
+  ["肥料の種類と量を選択します。",
+    "Choose the type and amount of fertilizer.",
+    "मलको प्रकार र मात्रा छान्नुहोस्।"],
+  ["牛糞堆肥+適量の化学肥料（N:P:K＝100:60:80kg/ha）",
+    "Cattle manure + moderate chemical fertilizer (N:P:K = 100:60:80 kg/ha)",
+    "गोबर मल + उचित रासायनिक मल (N:P:K = 100:60:80 केजी/हे.)"],
+  ["バランス重視",
+    "Focus on balance",
+    "सन्तुलनमा जोड"],
+  ["理想的な施肥！",
+    "Ideal fertilization!",
+    "उत्तम मलखाद!"],
+  ["有機と化学の組み合わせで土壌改善と収量確保を両立。品質にも好影響。",
+    "Combining organic and chemical fertilizer improves the soil and secures yield. Quality benefits too.",
+    "प्राङ्गारिक र रासायनिक मलको संयोजनले माटो सुधार र उत्पादन दुवै सुनिश्चित गर्‍यो। गुणस्तर पनि राम्रो भयो।"],
+  ["化学肥料を大量に投入（多ければ多いほど良い）",
+    "Apply lots of chemical fertilizer (the more the better)",
+    "धेरै रासायनिक मल हाल्ने (जति धेरै उति राम्रो)"],
+  ["収量を最大化したい",
+    "Want to maximize yield",
+    "उत्पादन अधिकतम बनाउने चाहना"],
+  ["施肥過多！",
+    "Over-fertilized!",
+    "मल धेरै भयो!"],
+  ["窒素過多で茎葉が茂りすぎ、イモが小さくなった。土壌も酸性化し環境にも悪影響。",
+    "Excess nitrogen caused lush leaves and small tubers. The soil acidified, harming the environment.",
+    "नाइट्रोजन धेरै भई पात मात्र बढे र आलु साना भए। माटो अम्लीय भई वातावरणलाई पनि हानि भयो।"],
+  ["牛糞堆肥のみ（化学肥料なし）",
+    "Cattle manure only (no chemical fertilizer)",
+    "गोबर मल मात्र (रासायनिक मल नहाल्ने)"],
+  ["環境には優しいが",
+    "Kind to the environment, but...",
+    "वातावरणमैत्री, तर…"],
+  ["環境には優しいが収量は控えめ",
+    "Eco-friendly, but a modest yield",
+    "वातावरणमैत्री तर उत्पादन थोरै कम"],
+  ["有機のみでは養分が不足気味。収量は平均より20%低いが品質と環境スコアは良好。",
+    "Organic matter alone leaves nutrients a little short. Yield is 20% below average, but quality and environment scores are good.",
+    "प्राङ्गारिक मलले मात्र पोषक तत्त्व पुग्दैन। उत्पादन औसतभन्दा 20% कम भए पनि गुणस्तर र वातावरण अङ्क राम्रा छन्।"],
+  ["畝立て・植付",
+    "Ridging and planting",
+    "ड्याङ बनाउने र रोप्ने"],
+  ["畝を立てて種芋を植え付けます。",
+    "Make ridges and plant the seed potatoes.",
+    "ड्याङ बनाएर बीउ आलु रोप्नुहोस्।"],
+  ["高畝（30cm以上）＋適正株間（30×60cm）で植付",
+    "High ridges (30 cm+) and proper spacing (30×60 cm)",
+    "अग्लो ड्याङ (30 से.मी.+) र उचित दूरी (30×60 से.मी.) मा रोप्ने"],
+  ["基本に忠実",
+    "By the book",
+    "आधारभूत नियमअनुसार"],
+  ["完璧な畝立て！",
+    "Perfect ridges!",
+    "उत्कृष्ट ड्याङ!"],
+  ["高畝は排水が良く、根の発達も良好。適正株間で光と養分が均等に行き渡る。",
+    "High ridges drain well and roots develop well. Proper spacing shares light and nutrients evenly.",
+    "अग्लो ड्याङमा निकास राम्रो हुन्छ र जरा राम्ररी फैलिन्छ। उचित दूरीले प्रकाश र पोषण बराबर पुग्छ।"],
+  ["平畝で密植（株間を狭くして収量アップを狙う）",
+    "Flat beds with dense planting (aiming for more yield)",
+    "समतल ड्याङमा बाक्लो रोप्ने (धेरै उत्पादनको आशामा)"],
+  ["たくさん植えれば収量アップ？",
+    "More plants, more yield?",
+    "धेरै रोपे धेरै फल्छ?"],
+  ["密植の落とし穴！",
+    "The dense-planting trap!",
+    "बाक्लो रोपाइँको पासो!"],
+  ["密植すると光・養分・水の競合が起き、イモが小さくなる。排水不良で病害も増加。",
+    "Crowded plants compete for light, nutrients and water, so tubers stay small. Poor drainage also increases disease.",
+    "बाक्लो रोप्दा प्रकाश, पोषण र पानीका लागि प्रतिस्पर्धा भई आलु साना हुन्छन्। निकास खराब भई रोग पनि बढ्यो।"],
+  ["段々畑の地形に合わせた等高線植付",
+    "Contour planting to follow the terraces",
+    "गह्राको बनावटअनुसार समोच्च रेखामा रोप्ने"],
+  ["山岳・丘陵地帯向け",
+    "For mountain and hill areas",
+    "हिमाल र पहाडका लागि"],
+  ["土壌侵食を防いだ！",
+    "Soil erosion prevented!",
+    "भूक्षय रोकियो!"],
+  ["等高線に沿った畝立ては雨水の流れを分散し、土壌侵食を大幅に軽減。",
+    "Ridges along the contour spread rainwater flow and greatly reduce soil erosion.",
+    "समोच्च रेखामा बनाएको ड्याङले वर्षाको पानीको बहाव छरेर भूक्षय धेरै घटाउँछ।"],
+  ["培土（土寄せ）",
+    "Hilling up",
+    "माटो चढाउने"],
+  ["芽が出て生育中の株に土を寄せる作業です。",
+    "Draw soil up around the growing plants.",
+    "बढ्दै गरेका बिरुवाको फेदमा माटो चढाउनुहोस्।"],
+  ["株高20cmの時点で高めに培土",
+    "Hill up high when plants reach 20 cm",
+    "बिरुवा 20 से.मी. हुँदा अग्लो गरी माटो चढाउने"],
+  ["正しいタイミング",
+    "The right timing",
+    "सही समय"],
+  ["完璧な培土！",
+    "Perfect hilling!",
+    "उत्कृष्ट माटो चढाइ!"],
+  ["適切な培土でイモが土から出て緑化するのを防いだ。品質向上に大きく貢献。",
+    "Good hilling kept tubers from surfacing and turning green, a big boost to quality.",
+    "सही तरिकाले माटो चढाउँदा आलु बाहिर निस्केर हरियो हुनबाट बच्यो। गुणस्तर निकै बढ्यो।"],
+  ["培土のタイミングを遅らせる（まだ大丈夫だろう）",
+    "Delay hilling (it should still be fine)",
+    "माटो चढाउन ढिलो गर्ने (अझै ठीकै होला)"],
+  ["忙しくて後回しに…",
+    "Too busy, putting it off...",
+    "व्यस्त भएर पछि सारियो…"],
+  ["緑化イモ発生！",
+    "Green tubers!",
+    "आलु हरियो भयो!"],
+  ["培土が遅れ、イモが地表に露出して緑化した。ソラニンが生成され食用不可に。品質スコアが大幅低下。",
+    "Hilling was late and exposed tubers turned green. Solanine formed, making them inedible. Quality drops sharply.",
+    "माटो चढाउन ढिलो भई आलु बाहिर देखिएर हरियो भयो। सोलानिन बनेर खान नमिल्ने भयो। गुणस्तर अङ्क निकै घट्यो।"],
+  ["2回培土（第1回+追加）でしっかり高畝に",
+    "Hill twice (first + extra) for solid high ridges",
+    "दुई पटक माटो चढाएर ड्याङ बलियो र अग्लो बनाउने"],
+  ["手間はかかるが効果的",
+    "More work, but effective",
+    "मेहनत लाग्छ तर प्रभावकारी"],
+  ["丁寧な管理で品質向上！",
+    "Careful work, better quality!",
+    "राम्रो हेरचाहले गुणस्तर बढ्यो!"],
+  ["2回の培土でイモのサイズが均一化。緑化ゼロで品質が大幅アップ。",
+    "Two hillings gave uniform tubers. No greening and a big rise in quality.",
+    "दुई पटक माटो चढाउँदा आलु एकनासका भए। हरियो आलु नभई गुणस्तर निकै बढ्यो।"],
+  ["灌漑管理",
+    "Irrigation",
+    "सिँचाइ व्यवस्थापन"],
+  ["水の管理は収量と品質を左右します。",
+    "Water management decides yield and quality.",
+    "पानीको व्यवस्थापनले उत्पादन र गुणस्तर निर्धारण गर्छ।"],
+  ["土の乾燥具合を見て畝間灌漑（適切な量）",
+    "Furrow irrigate according to soil dryness (right amount)",
+    "माटोको सुख्खापन हेरी कुलेसोमा उचित सिँचाइ गर्ने"],
+  ["状態を見極めて管理",
+    "Manage by observing conditions",
+    "अवस्था हेरेर व्यवस्थापन"],
+  ["水管理が上手い！",
+    "Great water management!",
+    "पानीको राम्रो व्यवस्थापन!"],
+  ["イモの肥大期に適切な水分補給。サイズが揃い収量・品質ともに向上。",
+    "Good watering while tubers were bulking. Sizes are even, and both yield and quality rise.",
+    "आलु बढ्ने बेला उचित पानी दिइयो। आकार मिल्यो र उत्पादन तथा गुणस्तर दुवै बढे।"],
+  ["雨頼みで灌漑なし",
+    "Rely on rain, no irrigation",
+    "वर्षामा भर पर्ने, सिँचाइ नगर्ने"],
+  ["コストゼロだが…",
+    "Zero cost, but...",
+    "खर्च शून्य, तर…"],
+  ["乾燥ストレスが発生",
+    "Drought stress",
+    "सुख्खाको असर पर्‍यो"],
+  ["晴天が続き、肥大期に水不足。イモが小さくなり収量が15%低下した。",
+    "Dry days continued and water ran short during bulking. Tubers are small and yield fell 15%.",
+    "घाम लागिरह्यो र आलु बढ्ने बेला पानी पुगेन। आलु साना भई उत्पादन 15% घट्यो।"],
+  ["たっぷり灌漑（水は多いほど良い）",
+    "Irrigate heavily (the more water the better)",
+    "धेरै सिँचाइ गर्ने (जति धेरै पानी उति राम्रो)"],
+  ["水をたくさん与えれば安心？",
+    "Plenty of water means safety?",
+    "धेरै पानी दिए ढुक्क हुन्छ?"],
+  ["過湿で腐敗が！",
+    "Rot from waterlogging!",
+    "धेरै पानीले कुहियो!"],
+  ["過剰な水で土壌が過湿状態になり、軟腐病が発生。イモの一部が腐れてしまった。",
+    "Too much water left the soil waterlogged and soft rot broke out. Some tubers rotted.",
+    "धेरै पानीले माटो अति ओसिलो भई नरम सडन रोग लाग्यो। केही आलु कुहिए।"],
+  ["病害虫対応",
+    "Pests and diseases",
+    "रोग र किरा व्यवस्थापन"],
+  ["生育中に問題が発生しています。対応を選んでください。",
+    "A problem has appeared in the growing crop. Choose your response.",
+    "बढ्दो बालीमा समस्या देखियो। के गर्ने छान्नुहोस्।"],
+  ["症状を確認してすぐに適切な薬剤を散布（マスク・手袋着用）",
+    "Check symptoms and promptly spray the right product (mask and gloves on)",
+    "लक्षण जाँची तुरुन्त उपयुक्त विषादी छर्ने (मास्क र पन्जा लगाएर)"],
+  ["早期対応・安全に",
+    "Early and safe response",
+    "छिटो र सुरक्षित कदम"],
+  ["適切な防除成功！",
+    "Effective control!",
+    "रोकथाम सफल!"],
+  ["早期発見・早期防除で被害を最小限に抑えた。安全装備で人体への影響もなし。",
+    "Early detection and control minimized damage. Safety gear prevented any harm to people.",
+    "समयमै पत्ता लगाई रोकथाम गर्दा क्षति न्यून भयो। सुरक्षा सामग्रीले स्वास्थ्यमा असर परेन।"],
+  ["農薬を大量に散布（多ければ多いほど効く）",
+    "Spray lots of pesticide (the more the better)",
+    "धेरै विषादी छर्ने (जति धेरै उति प्रभावकारी)"],
+  ["念のためたっぷりと",
+    "Plenty, just in case",
+    "ढुक्क हुन धेरै छर्ने"],
+  ["農薬過剰使用！",
+    "Pesticide overuse!",
+    "विषादीको अति प्रयोग!"],
+  ["必要以上の農薬散布で残留農薬が基準値超え。収量は守れたが健康・環境・市場評価に大打ち下がり。",
+    "Excess spraying pushed residues over the limit. Yield was saved, but health, the environment and market reputation suffered badly.",
+    "आवश्यकताभन्दा बढी विषादीले अवशेष मापदण्ड नाघ्यो। उत्पादन जोगियो तर स्वास्थ्य, वातावरण र बजारको विश्वासमा ठूलो धक्का लाग्यो।"],
+  ["様子見（大したことはないだろう）",
+    "Wait and see (it is probably nothing)",
+    "पर्खेर हेर्ने (ठूलो कुरा होइन होला)"],
+  ["まだ広がっていないから大丈夫？",
+    "It has not spread yet, so it is fine?",
+    "अझै फैलिएको छैन, ठीकै होला?"],
+  ["病害が拡大！",
+    "The disease spreads!",
+    "रोग फैलियो!"],
+  ["放置したことで病害が圃場全体に広がった。近隣農家にも疫病が波及してしまった。",
+    "Left alone, the disease spread across the field. Late blight reached neighboring farms too.",
+    "बेवास्ता गर्दा रोग पूरै खेतमा फैलियो। छिमेकी किसानको खेतमा पनि डढुवा पुग्यो।"],
+  ["収穫判断",
+    "Harvest decision",
+    "बाली खन्ने निर्णय"],
+  ["収穫のタイミングと方法を選びます。",
+    "Choose when and how to harvest.",
+    "कहिले र कसरी खन्ने छान्नुहोस्।"],
+  ["茎葉が枯れてから晴天日に収穫",
+    "Harvest on a sunny day after the tops die back",
+    "डाँठपात सुकेपछि घाम लागेको दिन खन्ने"],
+  ["教科書通りの正しい方法",
+    "The correct, textbook method",
+    "पाठ्यपुस्तकअनुसारको सही तरिका"],
+  ["最高の収穫タイミング！",
+    "Perfect harvest timing!",
+    "खन्ने उत्तम समय!"],
+  ["完熟・乾燥状態での収穫でイモの品質が最大化。傷も少なく貯蔵性も良好。",
+    "Harvesting mature and dry maximizes quality. Few wounds and good storability.",
+    "पाकेको र सुख्खा अवस्थामा खन्दा गुणस्तर सबैभन्दा राम्रो हुन्छ। घाउ कम र भण्डारणका लागि पनि राम्रो।"],
+  ["市場価格が高いうちに早めに収穫",
+    "Harvest early while market prices are high",
+    "बजार मूल्य बढी हुँदै चाँडो खन्ने"],
+  ["価格が下がる前に！",
+    "Before the price drops!",
+    "मूल्य घट्नुअघि नै!"],
+  ["早期収穫のトレードオフ",
+    "The early-harvest trade-off",
+    "चाँडो खन्दाको नाफा–घाटा"],
+  ["価格は良かったが、未熟収穫でイモが小さく、皮が薄くて傷つきやすい。品質スコアが下がった。",
+    "The price was good, but immature tubers are small with thin, easily damaged skin. Quality dropped.",
+    "मूल्य राम्रो पाइयो तर काँचै खनेकाले आलु साना र बोक्रा पातलो भई सजिलै चोट लाग्यो। गुणस्तर अङ्क घट्यो।"],
+  ["雨の日でも急いで収穫",
+    "Hurry and harvest even in the rain",
+    "पानी परे पनि हतारमा खन्ने"],
+  ["天候は関係ない？",
+    "Weather does not matter?",
+    "मौसमले फरक पार्दैन?"],
+  ["雨天収穫で品質悪化！",
+    "Rainy harvest ruins quality!",
+    "पानीमा खन्दा गुणस्तर बिग्रियो!"],
+  ["濡れた状態での収穫・傷・泥付きで品質が大幅低下。貯蔵中の腐敗リスクも上昇。",
+    "Wet, wounded and muddy tubers cut quality sharply. Risk of rot in storage also rises.",
+    "भिजेको, चोट लागेको र हिलो टाँसिएको हुँदा गुणस्तर निकै घट्यो। भण्डारणमा कुहिने जोखिम पनि बढ्यो।"],
+  ["貯蔵・出荷",
+    "Storage and shipping",
+    "भण्डारण र ढुवानी"],
+  ["収穫したジャガイモの貯蔵と出荷方法を選びます。",
+    "Choose how to store and ship your potatoes.",
+    "खनेको आलु कसरी भण्डारण गर्ने र पठाउने छान्नुहोस्।"],
+  ["キュアリング処理後、適切な温度・湿度で貯蔵",
+    "Cure, then store at proper temperature and humidity",
+    "क्युरिङपछि उचित तापक्रम र आर्द्रतामा भण्डारण गर्ने"],
+  ["手間をかけて品質を守る",
+    "Extra effort to protect quality",
+    "मेहनत गरी गुणस्तर जोगाउने"],
+  ["高品質で長期貯蔵成功！",
+    "High-quality long storage!",
+    "उच्च गुणस्तरको लामो भण्डारण सफल!"],
+  ["キュアリングで傷が治癒し、腐敗率がゼロに近い。端境期の高値出荷で収入最大化。",
+    "Curing healed wounds and rot is close to zero. Off-season high prices maximize income.",
+    "क्युरिङले घाउ निको भई कुहिने दर शून्यनजिक पुग्यो। बेमौसमी उच्च मूल्यले आम्दानी अधिकतम भयो।"],
+  ["収穫後すぐに全量出荷",
+    "Ship everything right after harvest",
+    "खन्नासाथ सबै बेच्न पठाउने"],
+  ["早く売り切りたい",
+    "Want to sell out quickly",
+    "चाँडै बेचिसक्ने चाहना"],
+  ["早期出荷で価格は低め",
+    "Early shipping, lower price",
+    "चाँडो बेच्दा मूल्य कम"],
+  ["収穫期は市場に出回る量が多く価格が低い。品質は悪くないが収入が少なかった。",
+    "At harvest time the market is full and prices are low. Quality is fine but income was small.",
+    "खन्ने बेला बजारमा आलु धेरै भई मूल्य कम हुन्छ। गुणस्तर ठीकै छ तर आम्दानी कम भयो।"],
+  ["光が当たる場所で野積み貯蔵",
+    "Pile outdoors in the light",
+    "उज्यालोमा बाहिरै थुपारेर राख्ने"],
+  ["とりあえず積んでおく",
+    "Just stack it for now",
+    "अहिलेलाई थुपारौँ"],
+  ["緑化・腐敗が多発！",
+    "Widespread greening and rot!",
+    "हरियो हुने र कुहिने समस्या बढ्यो!"],
+  ["光が当たりイモが緑化。腐敗も進んで30%以上が廃棄に。出荷できる量が激減した。",
+    "Light turned tubers green. Rot spread and over 30% were discarded. Little was left to sell.",
+    "उज्यालोले आलु हरियो भयो। कुहिएर 30% भन्दा बढी फाल्नुपर्‍यो। बेच्न मिल्ने परिमाण निकै घट्यो।"],
+  ["販売先の選択",
+    "Choose where to sell",
+    "कहाँ बेच्ने छान्ने"],
+  ["いよいよ販売です。収穫量と品質に応じて最適な販売先を選びましょう。",
+    "Time to sell. Choose the best outlet for your yield and quality.",
+    "अब बेच्ने बेला भयो। उत्पादन र गुणस्तरअनुसार उत्तम ठाउँ छान्नुहोस्।"],
+  ["突然の豪雨！モンスーン到来",
+    "Sudden downpour! The monsoon arrives",
+    "अचानक मुसलधारे वर्षा! मनसुन आयो"],
+  ["予告なしに激しい雨が降り始めた。畑が水浸しになっている。どう対応する？",
+    "Heavy rain began without warning. The field is flooding. What will you do?",
+    "पूर्वसूचनाबिना ठूलो पानी पर्न थाल्यो। खेत डुब्दैछ। के गर्नुहुन्छ?"],
+  ["事前に掘っておいた排水溝が機能した（準備済み）",
+    "Drains dug in advance did their job (prepared)",
+    "पहिल्यै खनेको निकास कुलोले काम गर्‍यो (तयारी थियो)"],
+  ["排水設計が功を奏した！",
+    "Drainage pays off!",
+    "निकासको योजना सफल!"],
+  ["事前の排水路整備のおかげで浸水を最小限に抑えた。",
+    "Drains prepared in advance kept flooding to a minimum.",
+    "पहिल्यै बनाएको निकासले डुबान न्यून भयो।"],
+  ["急いで排水溝を掘る",
+    "Rush to dig drains",
+    "हतारमा निकास कुलो खन्ने"],
+  ["間に合ったが被害あり",
+    "In time, but some damage",
+    "समयमै भयो तर केही क्षति"],
+  ["一部は助かったが、浸水した区画のイモが腐敗し始めた。",
+    "Part of the crop was saved, but tubers in flooded plots began to rot.",
+    "केही जोगियो तर डुबेको भागका आलु कुहिन थाले।"],
+  ["何もできない（排水設備なし）",
+    "Nothing can be done (no drainage)",
+    "केही गर्न सकिन्न (निकास छैन)"],
+  ["圃場が浸水！",
+    "The field is flooded!",
+    "खेत डुब्यो!"],
+  ["排水できず、軟腐病が爆発的に発生。収量の40%が失われた。",
+    "Without drainage, soft rot exploded. 40% of the yield was lost.",
+    "निकास नभएकाले नरम सडन रोग तीव्र फैलियो। 40% उत्पादन गुम्यो।"],
+  ["突然の雹（ひょう）！",
+    "Sudden hail!",
+    "अचानक असिना!"],
+  ["山岳地帯特有の雹が突然降ってきた。茎葉が激しく傷ついている。",
+    "Hail typical of the mountains fell suddenly. Leaves and stems are badly damaged.",
+    "हिमाली क्षेत्रमा हुने असिना अचानक पर्‍यो। डाँठपातमा ठूलो क्षति भयो।"],
+  ["わら被覆をしていたので被害が軽減された",
+    "Straw cover reduced the damage",
+    "परालले छोपेकाले क्षति कम भयो"],
+  ["わら被覆が効果的！",
+    "Straw cover works!",
+    "परालको छोपाइ प्रभावकारी!"],
+  ["事前のわら被覆が雹から葉を守った。被害は最小限。",
+    "Straw laid in advance protected leaves from hail. Damage was minimal.",
+    "पहिल्यै छोपेको परालले पातलाई असिनाबाट जोगायो। क्षति न्यून भयो।"],
+  ["被害を確認して追肥で回復を促す",
+    "Assess damage and top-dress to aid recovery",
+    "क्षति जाँची थप मल दिएर सुधार्ने"],
+  ["回復作業開始",
+    "Recovery begins",
+    "सुधारको काम सुरु"],
+  ["追肥で生育回復を試みた。収量への影響は最小限に抑えられた。",
+    "Extra fertilizer helped regrowth. The effect on yield was kept small.",
+    "थप मलले बिरुवा सुधार्ने प्रयास भयो। उत्पादनमा असर न्यून रह्यो।"],
+  ["何もしない（様子見）",
+    "Do nothing (wait and see)",
+    "केही नगर्ने (पर्खेर हेर्ने)"],
+  ["二次感染が発生！",
+    "Secondary infection!",
+    "दोस्रो सङ्क्रमण भयो!"],
+  ["傷ついた葉から病菌が侵入。疫病と軟腐病が同時発生してしまった。",
+    "Pathogens entered wounded leaves. Late blight and soft rot broke out together.",
+    "चोट लागेका पातबाट जीवाणु पसे। डढुवा र नरम सडन एकैपटक लागे।"],
+  ["予想外の長期乾燥！",
+    "Unexpected long drought!",
+    "अप्रत्याशित लामो खडेरी!"],
+  ["冬作の時期に雨が全く降らない乾燥が2週間続いている。",
+    "Two weeks without any rain in the winter season.",
+    "हिउँदे बालीको बेला 2 हप्तादेखि पानी परेको छैन।"],
+  ["川から引水して緊急灌漑",
+    "Bring river water for emergency irrigation",
+    "खोलाबाट पानी ल्याई आपतकालीन सिँचाइ गर्ने"],
+  ["灌漑で危機を乗り越えた！",
+    "Irrigation beat the crisis!",
+    "सिँचाइले सङ्कट टार्‍यो!"],
+  ["適切な灌漑でイモ肥大期の水不足を回避。収量への影響なし。",
+    "Good irrigation avoided a water shortage during bulking. No effect on yield.",
+    "उचित सिँचाइले आलु बढ्ने बेला पानीको कमी भएन। उत्पादनमा असर परेन।"],
+  ["わらマルチで水分蒸発を抑える",
+    "Use straw mulch to reduce evaporation",
+    "परालको छापो हाली पानी उड्न कम गर्ने"],
+  ["被害を軽減",
+    "Damage reduced",
+    "क्षति कम भयो"],
+  ["マルチ効果で土壌水分を維持。灌漑なしよりは被害を抑えられた。",
+    "Mulch kept moisture in the soil. Damage was less than with no action.",
+    "छापोले माटोको चिस्यान जोगायो। केही नगरेको भन्दा क्षति कम भयो।"],
+  ["何もしない（雨が降るまで待つ）",
+    "Do nothing (wait for rain)",
+    "केही नगर्ने (पानी पर्न पर्खने)"],
+  ["深刻な乾燥ストレス！",
+    "Severe drought stress!",
+    "गम्भीर सुख्खाको असर!"],
+  ["イモ肥大期の水不足で収量が35%減少。芋が小さく品質も低下した。",
+    "Water shortage during bulking cut yield by 35%. Tubers are small and quality fell.",
+    "आलु बढ्ने बेला पानी नपुगी उत्पादन 35% घट्यो। आलु साना भई गुणस्तर पनि घट्यो।"],
+  ["サルの被害！（テライ地帯）",
+    "Monkey raid! (Terai)",
+    "बाँदरको आतङ्क! (तराई)"],
+  ["群れのサルが畑に侵入し、作物を掘り起こしている！",
+    "A troop of monkeys has entered the field and is digging up the crop!",
+    "बाँदरको बथान खेतमा पसेर बाली खन्दैछ!"],
+  ["事前に設置した柵が機能した",
+    "A fence built in advance worked",
+    "पहिल्यै लगाएको बारले काम गर्‍यो"],
+  ["柵が効果的！",
+    "The fence works!",
+    "बार प्रभावकारी!"],
+  ["事前の柵設置で被害ゼロ。近隣農家にも柵設置を勧めた。",
+    "Zero damage thanks to the fence. You also recommended one to your neighbors.",
+    "पहिल्यै लगाएको बारले क्षति भएन। छिमेकी किसानलाई पनि बार लगाउन सुझाव दिइयो।"],
+  ["大声で追い払う",
+    "Shout to chase them away",
+    "चर्को स्वरले धपाउने"],
+  ["今日は何とか追い払ったが…",
+    "Chased off for today, but...",
+    "आज त धपाइयो, तर…"],
+  ["今日は大丈夫だったが、明日また来るかもしれない。根本的な対策が必要。",
+    "Today was fine, but they may return tomorrow. A lasting solution is needed.",
+    "आज ठीकै भयो तर भोलि फेरि आउन सक्छन्। दिगो उपाय चाहिन्छ।"],
+  ["何もできない",
+    "Nothing can be done",
+    "केही गर्न सकिन्न"],
+  ["大きな被害！",
+    "Heavy damage!",
+    "ठूलो क्षति!"],
+  ["サルによる掘り起こしで収量の20%が失われた。",
+    "Monkeys digging up the field cost 20% of the yield.",
+    "बाँदरले खनेर 20% उत्पादन गुम्यो।"],
+  ["ジャガイモ栽培ゲーム",
+    "Potato Farming Game",
+    "आलु खेती खेल"],
+  ["ジャガイモ<br>栽培ゲーム",
+    "Potato<br>Farming Game",
+    "आलु<br>खेती खेल"],
+  ["〜ネパール農家への道〜",
+    "~ The Road to Becoming a Nepali Farmer ~",
+    "~ नेपाली किसान बन्ने यात्रा ~"],
+  ["🌤️ 作型を選んでください",
+    "🌤️ Choose a cropping season",
+    "🌤️ खेतीको मौसम छान्नुहोस्"],
+  ["夏作",
+    "Summer crop",
+    "ग्रीष्मकालीन बाली"],
+  ["丘陵・山岳地帯<br>1〜3月植付",
+    "Hills and mountains<br>Plant Jan–Mar",
+    "पहाड र हिमाल<br>जनवरी–मार्चमा रोप्ने"],
+  ["冬作",
+    "Winter crop",
+    "हिउँदे बाली"],
+  ["テライ・丘陵低地<br>10〜11月植付",
+    "Terai and low hills<br>Plant Oct–Nov",
+    "तराई र तल्लो पहाड<br>अक्टोबर–नोभेम्बरमा रोप्ने"],
+  ["🗺️ 栽培地帯を選んでください",
+    "🗺️ Choose a growing region",
+    "🗺️ खेती गर्ने क्षेत्र छान्नुहोस्"],
+  ["テライ平野",
+    "Terai plains",
+    "तराई"],
+  ["〜300m<br>高温多湿",
+    "Up to 300 m<br>Hot and humid",
+    "300 मि. सम्म<br>गर्मी र ओसिलो"],
+  ["丘陵地帯",
+    "Hills",
+    "पहाड"],
+  ["300〜2000m<br>温暖・段々畑",
+    "300–2000 m<br>Mild, terraced",
+    "300–2000 मि.<br>न्यानो, गह्रा खेती"],
+  ["山岳地帯",
+    "Mountains",
+    "हिमाल"],
+  ["2000m〜<br>冷涼・霜リスク",
+    "Above 2000 m<br>Cool, frost risk",
+    "2000 मि. माथि<br>चिसो, तुसारोको जोखिम"],
+  ["🌱 栽培スタート！",
+    "🌱 Start farming!",
+    "🌱 खेती सुरु गरौँ!"],
+  ["選択肢",
+    "Choice",
+    "विकल्प"],
+  ["対応",
+    "Response",
+    "कदम"],
+  ["販売先",
+    "Outlet",
+    "बिक्री स्थल"],
+  ["📚 知識カード獲得！",
+    "📚 Knowledge card earned!",
+    "📚 ज्ञान कार्ड प्राप्त!"],
+  ["💰 販売フェーズへ",
+    "💰 Go to sales",
+    "💰 बिक्री चरणमा जाने"],
+  ["🏁 最終結果を見る",
+    "🏁 See final result",
+    "🏁 अन्तिम नतिजा हेर्ने"],
+  ["▶ 次のフェーズへ",
+    "▶ Next phase",
+    "▶ अर्को चरण"],
+  ["▶ 次へ",
+    "▶ Next",
+    "▶ अगाडि"],
+  ["⚠️ 突発イベント",
+    "⚠️ Sudden event",
+    "⚠️ आकस्मिक घटना"],
+  ["作物が全滅…",
+    "Your crop is lost...",
+    "बाली पूरै नष्ट भयो…"],
+  ["でも大丈夫。失敗から学ぶのが農業の極意。",
+    "But don't worry. Learning from failure is the heart of farming.",
+    "तर चिन्ता नगर्नुहोस्। असफलताबाट सिक्नु नै खेतीको सार हो।"],
+  ["もう一度挑戦しましょう！",
+    "Let's try again!",
+    "फेरि प्रयास गरौँ!"],
+  ["収穫量スコアがゼロになりました。作物が枯れてしまいました。",
+    "Your yield score has collapsed. The crop has withered.",
+    "उत्पादन अङ्क सकियो। बाली सुक्यो।"],
+  ["📚 今回集めた知識カード（{n}枚）",
+    "📚 Cards collected this time ({n})",
+    "📚 यस पटक जम्मा गरेका ज्ञान कार्ड ({n})"],
+  ["📚 集めた知識カード（{n}枚）",
+    "📚 Knowledge cards collected ({n})",
+    "📚 जम्मा गरेका ज्ञान कार्ड ({n})"],
+  ["📚 知識カード図鑑（{n}枚）",
+    "📚 Knowledge card album ({n})",
+    "📚 ज्ञान कार्ड सङ्ग्रह ({n})"],
+  ["🔄 もう一度挑戦する",
+    "🔄 Try again",
+    "🔄 फेरि प्रयास गर्ने"],
+  ["じゃがいも名人",
+    "Potato Master",
+    "आलु विशेषज्ञ"],
+  ["完璧な栽培管理で最高の収穫！ネパール農業の未来を担う存在です。",
+    "A superb harvest from perfect management! You carry the future of Nepali farming.",
+    "उत्कृष्ट व्यवस्थापनले सर्वोत्तम उत्पादन! तपाईं नेपाली कृषिको भविष्य हुनुहुन्छ।"],
+  ["ベテラン農家",
+    "Veteran Farmer",
+    "अनुभवी किसान"],
+  ["安定した栽培技術で高品質なジャガイモを生産。地域の模範的な農家です。",
+    "Steady skills and high-quality potatoes. You are a model farmer for your area.",
+    "स्थिर सीपले उच्च गुणस्तरको आलु उत्पादन। तपाईं क्षेत्रकै नमुना किसान हुनुहुन्छ।"],
+  ["一人前の農家",
+    "Full-fledged Farmer",
+    "सक्षम किसान"],
+  ["バランスの取れた栽培ができています。さらなる技術向上を目指して！",
+    "Your farming is well balanced. Keep improving your skills!",
+    "तपाईंको खेती सन्तुलित छ। सीप अझै बढाउनुहोस्!"],
+  ["見習い農家",
+    "Apprentice Farmer",
+    "सिकारु किसान"],
+  ["まだ学ぶことが多いですが、基礎は身についています。経験を積みましょう。",
+    "There is still much to learn, but you have the basics. Gain more experience.",
+    "सिक्न धेरै बाँकी छ तर आधार बनिसकेको छ। अनुभव बढाउँदै जानुहोस्।"],
+  ["農業初心者",
+    "Beginner Farmer",
+    "नयाँ किसान"],
+  ["失敗を恐れずに！知識カードを活用して再挑戦してみてください。",
+    "Don't fear failure! Use your knowledge cards and try again.",
+    "असफलतासँग नडराउनुहोस्! ज्ञान कार्ड प्रयोग गरी फेरि प्रयास गर्नुहोस्।"],
+  ["🌾 収穫完了！",
+    "🌾 Harvest complete!",
+    "🌾 बाली भित्र्याइयो!"],
+  ["スコア詳細（平均: {n}点）",
+    "Score details (average: {n})",
+    "अङ्क विवरण (औसत: {n})"],
+  ["まだカードがありません。<br>良い選択をすると獲得できます！",
+    "No cards yet.<br>Make choices to earn them!",
+    "अहिलेसम्म कार्ड छैन।<br>राम्रो विकल्प छाने पाइन्छ!"],
+  ["閉じる",
+    "Close",
+    "बन्द गर्ने"],
+  ["🥔収穫量",
+    "🥔Yield",
+    "🥔उत्पादन"],
+  ["⭐品質",
+    "⭐Quality",
+    "⭐गुणस्तर"],
+  ["🧑‍🤝‍🧑人体",
+    "🧑‍🤝‍🧑Health",
+    "🧑‍🤝‍🧑स्वास्थ्य"],
+  ["🌿環境",
+    "🌿Environment",
+    "🌿वातावरण"],
+  ["🏘地域",
+    "🏘Community",
+    "🏘समुदाय"],
+  ["収穫",
+    "Yield",
+    "उत्पादन"],
+  ["品質",
+    "Quality",
+    "गुणस्तर"],
+  ["人体",
+    "Health",
+    "स्वास्थ्य"],
+  ["環境",
+    "Environ.",
+    "वातावरण"],
+  ["地域",
+    "Commun.",
+    "समुदाय"],
+  ["低〜中",
+    "Low–medium",
+    "कम–मध्यम"],
+  ["低い",
+    "Low",
+    "कम"],
+  ["中",
+    "Medium",
+    "मध्यम"],
+  ["高い",
+    "High",
+    "बढी"],
+  ["少ない",
+    "Little",
+    "कम"],
+  ["多い",
+    "A lot",
+    "धेरै"],
+  ["中程度",
+    "Moderate",
+    "मध्यम"],
+  ["中〜高（安定）",
+    "Medium–high (stable)",
+    "मध्यम–उच्च (स्थिर)"],
+  ["価格",
+    "Price",
+    "मूल्य"],
+  ["手間",
+    "Effort",
+    "मेहनत"],
+  ["リスク",
+    "Risk",
+    "जोखिम"],
+  ["🔒 ロック中",
+    "🔒 Locked",
+    "🔒 बन्द छ"],
+  ["市場（ハート）販売",
+    "Sell at the local market (haat)",
+    "हाट बजारमा बिक्री"],
+  ["地元の市場に持ち込む。手軽だが収穫期は価格が低い。",
+    "Take it to the local market. Easy, but prices are low at harvest time.",
+    "स्थानीय बजारमा लैजाने। सजिलो तर खन्ने बेला मूल्य कम हुन्छ।"],
+  ["市場で販売完了",
+    "Sold at the market",
+    "बजारमा बिक्री भयो"],
+  ["手軽に売れたが、収穫期は出回り量が多く価格は低め。来年は販売タイミングを工夫したい。",
+    "It sold easily, but supply is high and prices are low at harvest time. Next year, plan your timing.",
+    "सजिलै बिक्यो तर खन्ने बेला आपूर्ति धेरै भई मूल्य कम भयो। अर्को वर्ष बेच्ने समय मिलाउनुपर्छ।"],
+  ["仲買人への販売",
+    "Sell to a broker",
+    "बिचौलियालाई बिक्री"],
+  ["仲買人が畑まで引き取りに来る。交渉次第で価格が変わる。",
+    "A broker collects from your field. The price depends on negotiation.",
+    "बिचौलिया खेतमै लिन आउँछ। मूल्य मोलतोलमा भर पर्छ।"],
+  ["仲買人と好条件で契約！",
+    "A good deal with the broker!",
+    "बिचौलियासँग राम्रो सम्झौता!"],
+  ["仲買人に買い叩かれた…",
+    "The broker beat you down...",
+    "बिचौलियाले सस्तोमा लग्यो…"],
+  ["収量が多かったので仲買人も好条件を提示。まとまった収入になった。",
+    "With a large yield, the broker offered good terms. A solid income.",
+    "उत्पादन धेरै भएकाले बिचौलियाले राम्रो मूल्य दियो। राम्रो आम्दानी भयो।"],
+  ["収量が少なく足元を見られた。価格交渉で不利になってしまった。",
+    "With a small yield, the broker took advantage of you in price talks.",
+    "उत्पादन कम भएकाले बिचौलियाले फाइदा उठायो। मोलतोलमा घाटा भयो।"],
+  ["個人・直売販売",
+    "Direct sales to consumers",
+    "उपभोक्तालाई प्रत्यक्ष बिक्री"],
+  ["消費者に直接販売。高値だが輸送・販売の手間がかかる。",
+    "Sell straight to consumers. High price, but transport and selling take effort.",
+    "उपभोक्तालाई सिधै बेच्ने। मूल्य बढी तर ढुवानी र बिक्रीमा मेहनत लाग्छ।"],
+  ["直売で高収入！",
+    "High income from direct sales!",
+    "प्रत्यक्ष बिक्रीबाट राम्रो आम्दानी!"],
+  ["品質の良さが消費者に伝わり、高値で完売。常連客もできて次シーズンも期待できる。",
+    "Consumers saw the quality and you sold out at a high price. Regular customers bode well for next season.",
+    "उपभोक्ताले गुणस्तर मन पराए र बढी मूल्यमा सबै बिक्यो। नियमित ग्राहक बनेर अर्को सिजन पनि आशाजनक छ।"],
+  ["品質スコア不足（現在: {q}点 / 必要: 60点以上）",
+    "Quality too low (now: {q} / needed: 60+)",
+    "गुणस्तर अङ्क पुगेन (हाल: {q} / आवश्यक: 60+)"],
+  ["農協・契約栽培出荷",
+    "Co-op / contract farming",
+    "सहकारी / करार खेती"],
+  ["事前契約に基づく安定出荷。品質・数量基準を満たせば確実に売れる。",
+    "Steady sales under an advance contract. Guaranteed if you meet quality and quantity standards.",
+    "अग्रिम करारअनुसार स्थिर बिक्री। गुणस्तर र परिमाण पुगे निश्चित बिक्छ।"],
+  ["農協契約で安定収入！",
+    "Stable income from the co-op!",
+    "सहकारी करारबाट स्थिर आम्दानी!"],
+  ["品質・収量ともに基準をクリア。安定した価格で全量買い取ってもらえた。農協の技術指導も受けられる。",
+    "You met both standards and sold everything at a stable price. You also get the co-op's technical advice.",
+    "गुणस्तर र उत्पादन दुवै मापदण्ड पुग्यो। स्थिर मूल्यमा सबै बिक्यो। सहकारीको प्राविधिक सल्लाह पनि पाइन्छ।"],
+  ["収穫量({h})・品質({q})スコアが両方55以上必要",
+    "Yield ({h}) and quality ({q}) must both be 55+",
+    "उत्पादन ({h}) र गुणस्तर ({q}) दुवै 55+ चाहिन्छ"],
+  ["いよいよ販売！",
+    "Time to sell!",
+    "अब बेच्ने बेला!"],
+  ["今シーズンの収穫物を売る時がきた。<br>どこに売るかで収入と地域への影響が大きく変わる。",
+    "It is time to sell this season's crop.<br>Where you sell greatly affects your income and community.",
+    "यस सिजनको बाली बेच्ने बेला भयो।<br>कहाँ बेच्ने भन्नेले आम्दानी र समुदायमा ठूलो असर पार्छ।"],
+  ["🥔 収穫量スコア",
+    "🥔 Yield score",
+    "🥔 उत्पादन अङ्क"],
+  ["⭐ 品質スコア",
+    "⭐ Quality score",
+    "⭐ गुणस्तर अङ्क"],
+  ["🔓 解放済み",
+    "🔓 Unlocked",
+    "🔓 खुलेका"],
+  ["{n}点",
+    "{n} pts",
+    "{n} अङ्क"],
+  ["PHASE {a}/{b}",
+    "PHASE {a}/{b}",
+    "चरण {a}/{b}"],
+];
+const TRANSLATION_MAP = new Map(TRANSLATIONS.map(([ja, en, ne]) => [ja, { en, ne }]));
 
 // ===== INIT =====
 render();
